@@ -27,12 +27,11 @@ Three-layer end-to-end anomaly detection architecture: detection, attribution, d
 |----------------|----------------------------------------------------------------------------------|---|------------------------------------|
 | LLM candidates | Mistral-7B / Llama-3.1-8B / DeepSeek-R1 (distilled)                              | 📋 Planned | The end-to-end pipeline has been verified using large-scale APIs. The 7B/8B local candidates need to be re-tuned. The prompt must be independent of the candidate model to avoid self-assessment. |
 | Embedding candidates     | all-MiniLM-L6-v2 (sentence-transformers)                                         | 📋 Planned | ased on the MiniLM architecture (Wang et al., 2020)   |
-| Embedding      | all-MiniLM-L6-v2 (sentence-transformers)                                         | ❓ Open question| ased on the MiniLM architecture (Wang et al., 2020)   |
 | Knowledge base | SMD Derivation: Training Set Statistical Profile + interpretation_labels history | 📋 Planned |              |
 | Confidence filter | Confidence-based Filter                                                          | 📋 Planned | The second FP surpression          |
 | Eval judge | ⚠️ TBD (GPT-4 class API preferred)                                               | ❓ Open question | It is necessary to be independent of the candidate model and avoid self-evaluation.                  |
 
-图例：✅ confirmed | 🔨 developing | 📋 Planned | ❓ not decided
+cutline: ✅ confirmed | 🔨 developing | 📋 Planned | ❓ not decided
 
 ## Dataset
 Server Machine Dataset (SMD), Su et al. (2019).
