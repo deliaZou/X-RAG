@@ -1,0 +1,11 @@
+data/*
+!data/README.md
+!data/.gitkeep
+*.pkl
+*.joblib
+results/raw/
+__pycache__/
+.ipynb_checkpoints/
+*.log
+.env
+drafts/
