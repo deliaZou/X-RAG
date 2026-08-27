@@ -1,0 +1,201 @@
+{
+  "root_cause": "emailservice_latency",
+  "root_cause_ranking": [
+    {
+      "rank": 1,
+      "name": "emailservice_latency",
+      "service": "emailservice",
+      "metric": "latency",
+      "reason": "Dominant SHAP value by several orders of magnitude, matching the root cause chain start; network delay fault pattern directly impacts latency."
+    },
+    {
+      "rank": 2,
+      "name": "checkoutservice_latency",
+      "service": "checkoutservice",
+      "metric": "latency",
+      "reason": "Second highest SHAP, directly downstream of emailservice in the propagation chain."
+    },
+    {
+      "rank": 3,
+      "name": "frontend_socket",
+      "service": "frontend",
+      "metric": "socket",
+      "reason": "Downstream of checkoutservice; socket metric anomaly likely a secondary effect of the latency disturbance."
+    },
+    {
+      "rank": 4,
+      "name": "shippingservice_latency",
+      "service": "shippingservice",
+      "metric": "latency",
+      "reason": "Further downstream, latency elevation consistent with cascading impact from the root cause."
+    },
+    {
+      "rank": 5,
+      "name": "shippingservice_mem",
+      "service": "shippingservice",
+      "metric": "mem",
+      "reason": "Resource metric secondary effect observed in a downstream service."
+    },
+    {
+      "rank": 6,
+      "name": "redis_diskio",
+      "service": "redis",
+      "metric": "diskio",
+      "reason": "Disk I/O anomaly at the tail of the propagation chain, likely a secondary resource effect."
+    },
+    {
+      "rank": 7,
+      "name": "paymentservice_latency",
+      "service": "paymentservice",
+      "metric": "latency",
+      "reason": "Lower SHAP; may be tangentially affected but not part of the main root cause chain."
+    },
+    {
+      "rank": 8,
+      "name": "frontend_cpu",
+      "service": "frontend",
+      "metric": "cpu",
+      "reason": "CPU metric anomaly in frontend, secondary resource pressure."
+    },
+    {
+      "rank": 9,
+      "name": "paymentservice_mem",
+      "service": "paymentservice",
+      "metric": "mem",
+      "reason": "Memory metric anomaly in paymentservice, low significance."
+    },
+    {
+      "rank": 10,
+      "name": "currencyservice_latency",
+      "service": "currencyservice",
+      "metric": "latency",
+      "reason": "Small SHAP value, likely noise or unrelated minor fluctuation."
+    }
+  ],
+  "confidence": 0.98,
+  "severity": "critical",
+  "root_cause_explanation": "The extreme SHAP value for emailservice_latency, combined with the provided root cause chain (emailservice → checkoutservice → frontend → shippingservice → redis), strongly indicates that a network delay or latency fault in emailservice is the originating cause. Other anomalous metrics are downstream cascading effects. The high fidelity of the explanation further supports this diagnosis.",
+  "evidence_used": [
+    "Service topology indicating emailservice as the upstream source of the propagation chain",
+    "Known fault pattern: network delay manifests directly in latency metric"
+  ],
+  "recommended_actions": [
+    "Investigate emailservice deployment and network latency issues",
+    "Check emailservice logs and infrastructure for delays or packet loss",
+    "Monitor downstream services for recovery after addressing emailservice"
+  ],
+  "escalation_required": true,
+  "xai_quality_flag": "Fidelity: 0.9989 (High); Stability: N/A",
+  "source_xai_report": {
+    "timestamp": "checkoutservice_loss_2",
+    "detection_result": "Anomaly",
+    "model_score": 8761925.08468,
+    "xai_analysis": {
+      "root_cause_chain": [
+        "emailservice",
+        "checkoutservice",
+        "frontend",
+        "shippingservice",
+        "redis"
+      ],
+      "fidelity_assessment": "High (Fidelity: 0.9989) -> Strong evidence",
+      "stability_assessment": "N/A (未接入 stability 指标)"
+    },
+    "xai_gateway_suggestion": "Escalate: High-Confidence Anomaly",
+    "l2_candidates": [
+      {
+        "rank": 1,
+        "name": "emailservice_latency",
+        "service": "emailservice",
+        "metric": "latency",
+        "shap": 8761871.12169,
+        "direction": "up"
+      },
+      {
+        "rank": 2,
+        "name": "checkoutservice_latency",
+        "service": "checkoutservice",
+        "metric": "latency",
+        "shap": 219392.36293,
+        "direction": "up"
+      },
+      {
+        "rank": 3,
+        "name": "frontend_socket",
+        "service": "frontend",
+        "metric": "socket",
+        "shap": 3253.36844,
+        "direction": "up"
+      },
+      {
+        "rank": 4,
+        "name": "shippingservice_latency",
+        "service": "shippingservice",
+        "metric": "latency",
+        "shap": 523.71843,
+        "direction": "up"
+      },
+      {
+        "rank": 5,
+        "name": "shippingservice_mem",
+        "service": "shippingservice",
+        "metric": "mem",
+        "shap": 245.01043,
+        "direction": "down"
+      },
+      {
+        "rank": 6,
+        "name": "redis_diskio",
+        "service": "redis",
+        "metric": "diskio",
+        "shap": 206.86996,
+        "direction": "up"
+      },
+      {
+        "rank": 7,
+        "name": "paymentservice_latency",
+        "service": "paymentservice",
+        "metric": "latency",
+        "shap": 80.11842,
+        "direction": "up"
+      },
+      {
+        "rank": 8,
+        "name": "frontend_cpu",
+        "service": "frontend",
+        "metric": "cpu",
+        "shap": 69.18297,
+        "direction": "down"
+      },
+      {
+        "rank": 9,
+        "name": "paymentservice_mem",
+        "service": "paymentservice",
+        "metric": "mem",
+        "shap": 45.67185,
+        "direction": "up"
+      },
+      {
+        "rank": 10,
+        "name": "currencyservice_latency",
+        "service": "currencyservice",
+        "metric": "latency",
+        "shap": 36.61534,
+        "direction": "down"
+      }
+    ],
+    "ground_truth_meta": {
+      "service": "checkoutservice",
+      "metric": "checkoutservice_latency",
+      "fault": "loss"
+    },
+    "case_id": "checkoutservice_loss_2",
+    "n_explained_points": 15,
+    "attribution_fidelity": 0.9989
+  },
+  "retrieved_context": {
+    "playbooks": [],
+    "topology_docs": "Service Topology:"
+  },
+  "pre_retrieval_query": "emailservice checkoutservice frontend shippingservice redis"
+}

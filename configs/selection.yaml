@@ -1,0 +1,58 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# RO3-1 Candidate Selection — Unified Hyperparameters
+# ═══════════════════════════════════════════════════════════════════════════
+# Single source of truth for every candidate's parameters.
+# All 28 machines read THIS file, so "unified across machines" is enforced here.
+#
+# NOTE: values below are a pure extraction of what was previously hardcoded.
+# Nothing has been re-tuned yet. Each entry is annotated with its source so
+# it can be reviewed one by one:
+#   [default]  = sklearn/pyod library default
+#   [standard] = common convention in the anomaly-detection literature
+#   [tbd]      = placeholder value, needs a justified decision
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Shared across ALL algorithms — the unified detection threshold.
+# contamination drives the hard label (FP / FPR / F1). AUC metrics are
+# unaffected by it. This is the single most important value for cross-algorithm
+# comparability and must stay identical across every machine and algorithm.
+shared:
+  contamination: 0.05        # [tbd] uniform fixed value;
+
+# Tree-based detectors
+iForest:
+  n_estimators: 100          # [standard]
+  random_state: 42           # [standard] reproducibility
+
+EIF:
+  n_estimators: 100          # [standard]
+  random_state: 42           # [standard]
+  max_features: 0.8          # [tbd] only used in approx mode (sklearn IF proxy)
+
+# Distance / density detectors
+LOF:
+  n_neighbors: 20            # [default] sklearn default
+
+KNN:
+  n_neighbors: 5             # [default] pyod default
+
+HBOS:
+  n_bins: 10                 # [default] pyod default
+
+CBLOF:
+  n_clusters: 8              # [default] pyod default
+  alpha: 0.75                # [default]
+  beta: 3                    # [default]
+
+# Distribution / reconstruction detectors
+COPOD: {}                    # no tunable params
+
+PCC:
+  n_components: 0.95         # [default] retain 95% variance
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Experiment-level (not algorithm params, but affect measured numbers)
+# ═══════════════════════════════════════════════════════════════════════════
+experiment:
+  explain_samples: 100       # instances sampled for SHAP timing
+  kernel_background: 50      # KernelSHAP background summary size

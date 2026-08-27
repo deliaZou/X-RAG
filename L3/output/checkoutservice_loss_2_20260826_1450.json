@@ -1,0 +1,194 @@
+{
+  "root_cause": "emailservice_latency",
+  "root_cause_ranking": [
+    {
+      "rank": 1,
+      "name": "emailservice_latency",
+      "service": "emailservice",
+      "metric": "latency",
+      "reason": "Overwhelming SHAP value (8.76M) nearly equal to the total anomaly score, directly indicating this metric is the primary driver. Known fault pattern: network delay manifests in latency. Root cause chain starts here with high fidelity."
+    },
+    {
+      "rank": 2,
+      "name": "checkoutservice_latency",
+      "service": "checkoutservice",
+      "metric": "latency",
+      "reason": "Secondary elevation due to checkoutservice depending on emailservice. When emailservice slows, checkoutservice latency increases as it waits for synchronous calls. SHAP is second highest."
+    },
+    {
+      "rank": 3,
+      "name": "frontend_socket",
+      "service": "frontend",
+      "metric": "socket",
+      "reason": "Frontend is the entrypoint and calls checkoutservice; as checkoutservice latency rises, open sockets may accumulate, leading to a socket metric increase. Lower SHAP suggests this is a consequence, not a cause."
+    },
+    {
+      "rank": 4,
+      "name": "shippingservice_latency",
+      "service": "shippingservice",
+      "metric": "latency",
+      "reason": "Shippingservice is also called by checkoutservice and may be affected by the same load imbalance or slow downstream pattern. Appears in the root cause chain after frontend_socket."
+    },
+    {
+      "rank": 5,
+      "name": "shippingservice_mem",
+      "service": "shippingservice",
+      "metric": "mem",
+      "reason": "Memory metric may show secondary effects from the latency issue, but SHAP is small. Likely a symptom rather than root cause."
+    },
+    {
+      "rank": 6,
+      "name": "redis_diskio",
+      "service": "redis",
+      "metric": "diskio",
+      "reason": "Redis is not in the direct call chain of emailservice; low SHAP suggests weak correlation with the anomaly, unlikely to be the cause."
+    },
+    {
+      "rank": 7,
+      "name": "paymentservice_latency",
+      "service": "paymentservice",
+      "metric": "latency",
+      "reason": "Another dependency of checkoutservice, but its latency contribution is minimal and not part of the root cause chain."
+    },
+    {
+      "rank": 8,
+      "name": "frontend_cpu",
+      "service": "frontend",
+      "metric": "cpu",
+      "reason": "CPU usage at frontend may increase due to handling more connections or processing, but SHAP is very low; likely unrelated."
+    },
+    {
+      "rank": 9,
+      "name": "currencyservice_latency",
+      "service": "currencyservice",
+      "metric": "latency",
+      "reason": "Not in the observed root cause chain and has very low SHAP, indicating negligible influence."
+    },
+    {
+      "rank": 10,
+      "name": "adservice_cpu",
+      "service": "adservice",
+      "metric": "cpu",
+      "reason": "Lowest SHAP value, completely non-contributory to this anomaly; likely noise or independent fluctuation."
+    }
+  ],
+  "confidence": 0.95,
+  "severity": "high",
+  "root_cause_explanation": "The anomaly is overwhelmingly driven by emailservice_latency, as evidenced by its SHAP value comprising nearly 100% of the model score. Since emailservice is a leaf node called by checkoutservice, a latency spike there directly impacts checkoutservice performance and can cause downstream socket and resource metric changes. The high-fidelity root cause chain confirms emailservice_latency is the starting point.",
+  "evidence_used": [
+    "Service topology: emailservice is a leaf node called by checkoutservice, so anomalies in emailservice directly affect checkoutservice",
+    "Root cause chain with Fidelity=0.9989: emailservice_latency → checkoutservice_latency → frontend_socket → shippingservice_latency → shippingservice_mem",
+    "Known fault pattern: network delays manifest directly in latency metric; emailservice_latency is the dominant SHAP metric"
+  ],
+  "recommended_actions": [
+    "Investigate emailservice deployment: check pods, logs, resource usage (CPU, memory, network)",
+    "Check network connectivity and latency between checkoutservice and emailservice, including service mesh/proxy settings",
+    "Look for upstream dependencies of emailservice (e.g., SMTP server, external APIs) that might be slow",
+    "If the fault is resource-related, scale up emailservice or apply autoscaling policies",
+    "Restart or failover emailservice pods if a transient issue is suspected"
+  ],
+  "escalation_required": true,
+  "xai_quality_flag": "High fidelity (0.9989); stability not integrated",
+  "source_xai_report": {
+    "timestamp": "checkoutservice_loss_2",
+    "detection_result": "Anomaly",
+    "model_score": 8761874.30516,
+    "xai_analysis": {
+      "root_cause_chain": [
+        "emailservice_latency",
+        "checkoutservice_latency",
+        "frontend_socket",
+        "shippingservice_latency",
+        "shippingservice_mem"
+      ],
+      "fidelity_assessment": "High (Fidelity: 0.9989) -> Strong evidence",
+      "stability_assessment": "N/A (未接入 stability 指标)"
+    },
+    "xai_gateway_suggestion": "Escalate: High-Confidence Anomaly",
+    "l2_candidates": [
+      {
+        "name": "emailservice_latency",
+        "service": "emailservice",
+        "metric": "latency",
+        "shap": 8761830.64098,
+        "rank": 1
+      },
+      {
+        "name": "checkoutservice_latency",
+        "service": "checkoutservice",
+        "metric": "latency",
+        "shap": 219384.34404,
+        "rank": 2
+      },
+      {
+        "name": "frontend_socket",
+        "service": "frontend",
+        "metric": "socket",
+        "shap": 3328.5907,
+        "rank": 3
+      },
+      {
+        "name": "shippingservice_latency",
+        "service": "shippingservice",
+        "metric": "latency",
+        "shap": 556.10473,
+        "rank": 4
+      },
+      {
+        "name": "shippingservice_mem",
+        "service": "shippingservice",
+        "metric": "mem",
+        "shap": 256.60661,
+        "rank": 5
+      },
+      {
+        "name": "redis_diskio",
+        "service": "redis",
+        "metric": "diskio",
+        "shap": 200.99097,
+        "rank": 6
+      },
+      {
+        "name": "paymentservice_latency",
+        "service": "paymentservice",
+        "metric": "latency",
+        "shap": 79.0658,
+        "rank": 7
+      },
+      {
+        "name": "frontend_cpu",
+        "service": "frontend",
+        "metric": "cpu",
+        "shap": 64.95994,
+        "rank": 8
+      },
+      {
+        "name": "currencyservice_latency",
+        "service": "currencyservice",
+        "metric": "latency",
+        "shap": 59.68762,
+        "rank": 9
+      },
+      {
+        "name": "adservice_cpu",
+        "service": "adservice",
+        "metric": "cpu",
+        "shap": 50.69374,
+        "rank": 10
+      }
+    ],
+    "ground_truth_meta": {
+      "service": "checkoutservice",
+      "metric": "checkoutservice_latency"
+    },
+    "case_id": "checkoutservice_loss_2"
+  },
+  "retrieved_context": {
+    "playbooks": [
+      "[Playbook: Socket fault | source: prometheus-operator/runbooks]\n---\ntitle: Node High Number Conntrack Entries Used\nweight: 20\n---\n\n# NodeHighNumberConntrackEntriesUsed\n\n## Meaning\n\nNumber of conntrack",
+      "[Playbook: Disk fault | source: prometheus-operator/runbooks]\n---\ntitle: Kubelet Pod Start Up Latency High\nweight: 20\n---\n\n# KubeletPodStartUpLatencyHigh\n\n## Meaning\n\nKubelet Pod startup 99th percenti"
+    ],
+    "topology_docs": "Service Topology:\n  - emailservice is called by: checkoutservice\n    Hint: Leaf node. Anomaly is usually self-contained, does not affect other services.\n  - checkoutservice calls: emailservice, shippi"
+  },
+  "pre_retrieval_query": "emailservice_latency checkoutservice_latency frontend_socket shippingservice_latency shippingservice_mem"
+}

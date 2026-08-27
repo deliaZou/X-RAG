@@ -1,0 +1,49 @@
+{
+  "root_cause": "checkoutservice_error",
+  "root_cause_ranking": [
+    {
+      "rank": 1,
+      "name": "checkoutservice_error",
+      "service": "checkoutservice",
+      "metric": "error",
+      "reason": "Known fault patterns indicate LOSS faults manifest primarily in the error metric. The anomaly identifier 'checkoutservice_loss_2' points to a loss-related issue in checkoutservice, making the error metric the most probable manifestation."
+    }
+  ],
+  "confidence": 0.35,
+  "severity": "high",
+  "root_cause_explanation": "No L2 candidate root causes were provided in the anomaly report, but the anomaly identifier 'checkoutservice_loss_2' and known fault patterns for network LOSS suggest the root cause is the error metric of the checkoutservice. The absence of SHAP values and topology limits certainty, hence low confidence.",
+  "evidence_used": [
+    "Known fault pattern: Network faults (LOSS) manifest directly in error metric",
+    "Anomaly identifier indicates loss in checkoutservice"
+  ],
+  "recommended_actions": [
+    "Inspect network connectivity and packet loss between checkoutservice and dependent services",
+    "Check error rates and logs in checkoutservice for related failures",
+    "Verify network infrastructure and consider failover or mitigation measures"
+  ],
+  "escalation_required": true,
+  "xai_quality_flag": "Fidelity is high (0.9989) but L2 candidates were not provided, limiting root cause attribution.",
+  "source_xai_report": {
+    "timestamp": "checkoutservice_loss_2",
+    "detection_result": "Anomaly",
+    "model_score": 0.0,
+    "xai_analysis": {
+      "root_cause_chain": [],
+      "fidelity_assessment": "High (Fidelity: 0.9989) -> Strong evidence",
+      "stability_assessment": "N/A (未接入 stability 指标)"
+    },
+    "xai_gateway_suggestion": "Escalate: High-Confidence Anomaly",
+    "l2_candidates": [],
+    "ground_truth_meta": {
+      "service": "checkoutservice",
+      "fault": "loss",
+      "metric": "checkoutservice_latency"
+    },
+    "case_id": "checkoutservice_loss_2"
+  },
+  "retrieved_context": {
+    "playbooks": [],
+    "topology_docs": "Service Topology:"
+  },
+  "pre_retrieval_query": "server anomaly"
+}

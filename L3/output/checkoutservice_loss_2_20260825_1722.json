@@ -1,0 +1,164 @@
+{
+  "root_cause": "frontend_socket",
+  "root_cause_ranking": [
+    {
+      "rank": 1,
+      "name": "frontend_socket",
+      "service": "frontend",
+      "metric": "socket",
+      "reason": "Socket is a cause metric (resource exhaustion), frontend is the upstream orchestrator, and socket faults cause connection drops and widespread latency. It has the highest SHAP among cause-type metrics and is supported by an ops playbook."
+    },
+    {
+      "rank": 2,
+      "name": "shippingservice_mem",
+      "service": "shippingservice",
+      "metric": "mem",
+      "reason": "Memory is a cause metric; memory pressure can degrade shippingservice and propagate latency upstream. It appears in the root cause chain but has lower SHAP than frontend_socket."
+    },
+    {
+      "rank": 3,
+      "name": "frontend_cpu",
+      "service": "frontend",
+      "metric": "cpu",
+      "reason": "CPU is a cause metric; high CPU at frontend can lead to service slowdowns, but its SHAP is substantially lower than socket/mem and is less likely to be the primary initiator."
+    },
+    {
+      "rank": 4,
+      "name": "redis_diskio",
+      "service": "redis",
+      "metric": "diskio",
+      "reason": "Disk I/O is a cause metric; a disk bottleneck in redis can cause latency in dependent services, but SHAP is lower and no direct topology evidence links it to the observed spike."
+    },
+    {
+      "rank": 5,
+      "name": "adservice_cpu",
+      "service": "adservice",
+      "metric": "cpu",
+      "reason": "CPU is a cause metric, but its SHAP is the lowest among resource candidates and adservice is not highlighted in the root cause chain, making it a weaker candidate."
+    }
+  ],
+  "confidence": 0.72,
+  "severity": "critical",
+  "root_cause_explanation": "The L2 SHAP ranking places latency metrics at the top, but latency is a symptom, not a root cause. Among the cause-type metrics (cpu, mem, socket, diskio), frontend_socket has the highest SHAP and frontend is an upstream orchestrator; socket/conntrack exhaustion can cause connection drops and propagate latency to downstream services. I therefore re-ranked frontend_socket as the primary root cause, demoting high-SHAP latency metrics and elevating resource-level candidates.",
+  "evidence_used": [
+    "Ops Playbook: NodeHighNumberConntrackEntriesUsed - socket/conntrack exhaustion degrades service quality",
+    "Root cause chain: emailservice_latency → checkoutservice_latency → frontend_socket → shippingservice_latency → shippingservice_mem",
+    "L2 candidate list: frontend_socket has SHAP 3328.59, the highest among non-latency metrics",
+    "Feature semantics: latency/error are results, cpu/mem/socket/diskio are causes",
+    "Fidelity: 0.9989 (High) - strong evidence for model anomaly"
+  ],
+  "recommended_actions": [
+    "Inspect frontend socket/conntrack usage; check for near-limit conntrack entries and adjust sysctl or scale out if necessary.",
+    "Check frontend deployment for connection leaks or insufficient replicas; consider horizontal scaling to reduce socket pressure.",
+    "Investigate shippingservice memory usage and JVM/heap settings; consider memory limits and GC tuning if memory pressure is confirmed.",
+    "Check redis disk I/O latency and storage health; offload or add IOPS if disk I/O bottleneck is detected.",
+    "Monitor latency metrics after applying fixes to confirm symptom resolution and prevent recurrence."
+  ],
+  "escalation_required": true,
+  "xai_quality_flag": "Fidelity is high (0.9989), but stability is not integrated; SHAP is heavily skewed by latency symptoms, so re-ranking was driven by domain knowledge, resulting in moderate confidence.",
+  "source_xai_report": {
+    "timestamp": "checkoutservice_loss_2",
+    "detection_result": "Anomaly",
+    "model_score": 8761874.30516,
+    "xai_analysis": {
+      "root_cause_chain": [
+        "emailservice_latency",
+        "checkoutservice_latency",
+        "frontend_socket",
+        "shippingservice_latency",
+        "shippingservice_mem"
+      ],
+      "fidelity_assessment": "High (Fidelity: 0.9989) -> Strong evidence",
+      "stability_assessment": "N/A (未接入 stability 指标)"
+    },
+    "xai_gateway_suggestion": "Escalate: High-Confidence Anomaly",
+    "l2_candidates": [
+      {
+        "name": "emailservice_latency",
+        "service": "emailservice",
+        "metric": "latency",
+        "shap": 8761830.64098,
+        "rank": 1
+      },
+      {
+        "name": "checkoutservice_latency",
+        "service": "checkoutservice",
+        "metric": "latency",
+        "shap": 219384.34404,
+        "rank": 2
+      },
+      {
+        "name": "frontend_socket",
+        "service": "frontend",
+        "metric": "socket",
+        "shap": 3328.5907,
+        "rank": 3
+      },
+      {
+        "name": "shippingservice_latency",
+        "service": "shippingservice",
+        "metric": "latency",
+        "shap": 556.10473,
+        "rank": 4
+      },
+      {
+        "name": "shippingservice_mem",
+        "service": "shippingservice",
+        "metric": "mem",
+        "shap": 256.60661,
+        "rank": 5
+      },
+      {
+        "name": "redis_diskio",
+        "service": "redis",
+        "metric": "diskio",
+        "shap": 200.99097,
+        "rank": 6
+      },
+      {
+        "name": "paymentservice_latency",
+        "service": "paymentservice",
+        "metric": "latency",
+        "shap": 79.0658,
+        "rank": 7
+      },
+      {
+        "name": "frontend_cpu",
+        "service": "frontend",
+        "metric": "cpu",
+        "shap": 64.95994,
+        "rank": 8
+      },
+      {
+        "name": "currencyservice_latency",
+        "service": "currencyservice",
+        "metric": "latency",
+        "shap": 59.68762,
+        "rank": 9
+      },
+      {
+        "name": "adservice_cpu",
+        "service": "adservice",
+        "metric": "cpu",
+        "shap": 50.69374,
+        "rank": 10
+      }
+    ],
+    "ground_truth_meta": {
+      "service": "checkoutservice",
+      "metric": "checkoutservice_latency"
+    },
+    "case_id": "checkoutservice_loss_2"
+  },
+  "retrieved_context": {
+    "feature_docs": [],
+    "playbooks": [
+      "[Playbook: Socket fault | source: prometheus-operator/runbooks]\n---\ntitle: Node High Number Conntrack Entries Used\nweight: 20\n---\n\n# NodeHighNumberConntrackEntriesUsed\n\n## Meaning\n\nNumber of conntrack",
+      "[Playbook: Disk fault | source: prometheus-operator/runbooks]\n---\ntitle: Kubelet Pod Start Up Latency High\nweight: 20\n---\n\n# KubeletPodStartUpLatencyHigh\n\n## Meaning\n\nKubelet Pod startup 99th percenti"
+    ],
+    "alert_history": [],
+    "algo_config": [],
+    "topology_docs": []
+  },
+  "pre_retrieval_query": "emailservice_latency checkoutservice_latency frontend_socket shippingservice_latency shippingservice_mem"
+}

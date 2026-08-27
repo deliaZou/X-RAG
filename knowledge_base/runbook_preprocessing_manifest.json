@@ -1,0 +1,1015 @@
+[
+  {
+    "file_name": "AlertmanagerClusterCrashlooping.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerClusterCrashlooping.md",
+    "sub_url": "alertmanager/AlertmanagerClusterCrashlooping.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerClusterCrashlooping.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerClusterDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerClusterDown.md",
+    "sub_url": "alertmanager/AlertmanagerClusterDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerClusterDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerClusterFailedToSendAlerts.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerClusterFailedToSendAlerts.md",
+    "sub_url": "alertmanager/AlertmanagerClusterFailedToSendAlerts.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerClusterFailedToSendAlerts.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerConfigInconsistent.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerConfigInconsistent.md",
+    "sub_url": "alertmanager/AlertmanagerConfigInconsistent.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerConfigInconsistent.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerFailedReload.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerFailedReload.md",
+    "sub_url": "alertmanager/AlertmanagerFailedReload.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerFailedReload.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerFailedToSendAlerts.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerFailedToSendAlerts.md",
+    "sub_url": "alertmanager/AlertmanagerFailedToSendAlerts.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerFailedToSendAlerts.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "AlertmanagerMembersInconsistent.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\alertmanager\\AlertmanagerMembersInconsistent.md",
+    "sub_url": "alertmanager/AlertmanagerMembersInconsistent.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/alertmanager/AlertmanagerMembersInconsistent.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "etcdBackendQuotaLowSpace.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdBackendQuotaLowSpace.md",
+    "sub_url": "etcd/etcdBackendQuotaLowSpace.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdBackendQuotaLowSpace.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "etcdGRPCRequestsSlow.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdGRPCRequestsSlow.md",
+    "sub_url": "etcd/etcdGRPCRequestsSlow.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdGRPCRequestsSlow.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "latency",
+      "diskio",
+      "cpu"
+    ]
+  },
+  {
+    "file_name": "etcdHighFsyncDurations.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdHighFsyncDurations.md",
+    "sub_url": "etcd/etcdHighFsyncDurations.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdHighFsyncDurations.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio",
+      "latency"
+    ]
+  },
+  {
+    "file_name": "etcdHighNumberOfFailedGRPCRequests.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdHighNumberOfFailedGRPCRequests.md",
+    "sub_url": "etcd/etcdHighNumberOfFailedGRPCRequests.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdHighNumberOfFailedGRPCRequests.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "etcdInsufficientMembers.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdInsufficientMembers.md",
+    "sub_url": "etcd/etcdInsufficientMembers.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdInsufficientMembers.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "etcdMembersDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdMembersDown.md",
+    "sub_url": "etcd/etcdMembersDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdMembersDown.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Loss",
+    "trigger_metrics": [
+      "error"
+    ]
+  },
+  {
+    "file_name": "etcdNoLeader.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\etcd\\etcdNoLeader.md",
+    "sub_url": "etcd/etcdNoLeader.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/etcd/etcdNoLeader.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "InfoInhibitor.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\general\\InfoInhibitor.md",
+    "sub_url": "general/InfoInhibitor.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/general/InfoInhibitor.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeNetworkInterfaceFlapping.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\general\\NodeNetworkInterfaceFlapping.md",
+    "sub_url": "general/NodeNetworkInterfaceFlapping.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/general/NodeNetworkInterfaceFlapping.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Loss",
+    "trigger_metrics": [
+      "error",
+      "loss"
+    ]
+  },
+  {
+    "file_name": "TargetDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\general\\TargetDown.md",
+    "sub_url": "general/TargetDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/general/TargetDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "Watchdog.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\general\\Watchdog.md",
+    "sub_url": "general/Watchdog.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/general/Watchdog.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStateMetricsListErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kube-state-metrics\\KubeStateMetricsListErrors.md",
+    "sub_url": "kube-state-metrics/KubeStateMetricsListErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kube-state-metrics/KubeStateMetricsListErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStateMetricsShardingMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kube-state-metrics\\KubeStateMetricsShardingMismatch.md",
+    "sub_url": "kube-state-metrics/KubeStateMetricsShardingMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kube-state-metrics/KubeStateMetricsShardingMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStateMetricsShardsMissing.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kube-state-metrics\\KubeStateMetricsShardsMissing.md",
+    "sub_url": "kube-state-metrics/KubeStateMetricsShardsMissing.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kube-state-metrics/KubeStateMetricsShardsMissing.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStateMetricsWatchErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kube-state-metrics\\KubeStateMetricsWatchErrors.md",
+    "sub_url": "kube-state-metrics/KubeStateMetricsWatchErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kube-state-metrics/KubeStateMetricsWatchErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "CPUThrottlingHigh.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\CPUThrottlingHigh.md",
+    "sub_url": "kubernetes/CPUThrottlingHigh.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/CPUThrottlingHigh.md",
+    "is_relevant": true,
+    "mapped_fault_type": "CPU",
+    "trigger_metrics": [
+      "cpu"
+    ]
+  },
+  {
+    "file_name": "KubeAggregatedAPIDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeAggregatedAPIDown.md",
+    "sub_url": "kubernetes/KubeAggregatedAPIDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeAggregatedAPIDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeAggregatedAPIErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeAggregatedAPIErrors.md",
+    "sub_url": "kubernetes/KubeAggregatedAPIErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeAggregatedAPIErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeAPIDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeAPIDown.md",
+    "sub_url": "kubernetes/KubeAPIDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeAPIDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeAPIErrorBudgetBurn.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeAPIErrorBudgetBurn.md",
+    "sub_url": "kubernetes/KubeAPIErrorBudgetBurn.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeAPIErrorBudgetBurn.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeAPITerminatedRequests.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeAPITerminatedRequests.md",
+    "sub_url": "kubernetes/KubeAPITerminatedRequests.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeAPITerminatedRequests.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeClientCertificateExpiration.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeClientCertificateExpiration.md",
+    "sub_url": "kubernetes/KubeClientCertificateExpiration.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeClientCertificateExpiration.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeClientErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeClientErrors.md",
+    "sub_url": "kubernetes/KubeClientErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeClientErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeContainerWaiting.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeContainerWaiting.md",
+    "sub_url": "kubernetes/KubeContainerWaiting.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeContainerWaiting.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeControllerManagerDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeControllerManagerDown.md",
+    "sub_url": "kubernetes/KubeControllerManagerDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeControllerManagerDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeCPUOvercommit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeCPUOvercommit.md",
+    "sub_url": "kubernetes/KubeCPUOvercommit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeCPUOvercommit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeCPUQuotaOvercommit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeCPUQuotaOvercommit.md",
+    "sub_url": "kubernetes/KubeCPUQuotaOvercommit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeCPUQuotaOvercommit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeDaemonSetMisScheduled.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeDaemonSetMisScheduled.md",
+    "sub_url": "kubernetes/KubeDaemonSetMisScheduled.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeDaemonSetMisScheduled.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeDaemonSetNotScheduled.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeDaemonSetNotScheduled.md",
+    "sub_url": "kubernetes/KubeDaemonSetNotScheduled.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeDaemonSetNotScheduled.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeDaemonSetRolloutStuck.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeDaemonSetRolloutStuck.md",
+    "sub_url": "kubernetes/KubeDaemonSetRolloutStuck.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeDaemonSetRolloutStuck.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeDeploymentGenerationMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeDeploymentGenerationMismatch.md",
+    "sub_url": "kubernetes/KubeDeploymentGenerationMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeDeploymentGenerationMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeDeploymentReplicasMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeDeploymentReplicasMismatch.md",
+    "sub_url": "kubernetes/KubeDeploymentReplicasMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeDeploymentReplicasMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeHpaMaxedOut.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeHpaMaxedOut.md",
+    "sub_url": "kubernetes/KubeHpaMaxedOut.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeHpaMaxedOut.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeHpaReplicasMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeHpaReplicasMismatch.md",
+    "sub_url": "kubernetes/KubeHpaReplicasMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeHpaReplicasMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeJobCompletion.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeJobCompletion.md",
+    "sub_url": "kubernetes/KubeJobCompletion.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeJobCompletion.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeJobFailed.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeJobFailed.md",
+    "sub_url": "kubernetes/KubeJobFailed.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeJobFailed.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletClientCertificateExpiration.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletClientCertificateExpiration.md",
+    "sub_url": "kubernetes/KubeletClientCertificateExpiration.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletClientCertificateExpiration.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletClientCertificateRenewalErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletClientCertificateRenewalErrors.md",
+    "sub_url": "kubernetes/KubeletClientCertificateRenewalErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletClientCertificateRenewalErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletDown.md",
+    "sub_url": "kubernetes/KubeletDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletPlegDurationHigh.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletPlegDurationHigh.md",
+    "sub_url": "kubernetes/KubeletPlegDurationHigh.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletPlegDurationHigh.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletPodStartUpLatencyHigh.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletPodStartUpLatencyHigh.md",
+    "sub_url": "kubernetes/KubeletPodStartUpLatencyHigh.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletPodStartUpLatencyHigh.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio",
+      "latency"
+    ]
+  },
+  {
+    "file_name": "KubeletServerCertificateExpiration.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletServerCertificateExpiration.md",
+    "sub_url": "kubernetes/KubeletServerCertificateExpiration.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletServerCertificateExpiration.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletServerCertificateRenewalErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletServerCertificateRenewalErrors.md",
+    "sub_url": "kubernetes/KubeletServerCertificateRenewalErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletServerCertificateRenewalErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeletTooManyPods.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeletTooManyPods.md",
+    "sub_url": "kubernetes/KubeletTooManyPods.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeletTooManyPods.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": [
+      "workload"
+    ]
+  },
+  {
+    "file_name": "KubeMemoryOvercommit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeMemoryOvercommit.md",
+    "sub_url": "kubernetes/KubeMemoryOvercommit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeMemoryOvercommit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeMemoryQuotaOvercommit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeMemoryQuotaOvercommit.md",
+    "sub_url": "kubernetes/KubeMemoryQuotaOvercommit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeMemoryQuotaOvercommit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeNodeNotReady.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeNodeNotReady.md",
+    "sub_url": "kubernetes/KubeNodeNotReady.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeNodeNotReady.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeNodeReadinessFlapping.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeNodeReadinessFlapping.md",
+    "sub_url": "kubernetes/KubeNodeReadinessFlapping.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeNodeReadinessFlapping.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeNodeUnreachable.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeNodeUnreachable.md",
+    "sub_url": "kubernetes/KubeNodeUnreachable.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeNodeUnreachable.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubePersistentVolumeErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubePersistentVolumeErrors.md",
+    "sub_url": "kubernetes/KubePersistentVolumeErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubePersistentVolumeErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubePersistentVolumeFillingUp.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubePersistentVolumeFillingUp.md",
+    "sub_url": "kubernetes/KubePersistentVolumeFillingUp.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubePersistentVolumeFillingUp.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio", "latency"
+    ]
+  },
+  {
+    "file_name": "KubePodCrashLooping.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubePodCrashLooping.md",
+    "sub_url": "kubernetes/KubePodCrashLooping.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubePodCrashLooping.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubePodNotReady.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubePodNotReady.md",
+    "sub_url": "kubernetes/KubePodNotReady.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubePodNotReady.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeProxyDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeProxyDown.md",
+    "sub_url": "kubernetes/KubeProxyDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeProxyDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeQuotaAlmostFull.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeQuotaAlmostFull.md",
+    "sub_url": "kubernetes/KubeQuotaAlmostFull.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeQuotaAlmostFull.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeQuotaExceeded.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeQuotaExceeded.md",
+    "sub_url": "kubernetes/KubeQuotaExceeded.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeQuotaExceeded.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeQuotaFullyUsed.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeQuotaFullyUsed.md",
+    "sub_url": "kubernetes/KubeQuotaFullyUsed.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeQuotaFullyUsed.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeSchedulerDown.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeSchedulerDown.md",
+    "sub_url": "kubernetes/KubeSchedulerDown.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeSchedulerDown.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStatefulSetGenerationMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeStatefulSetGenerationMismatch.md",
+    "sub_url": "kubernetes/KubeStatefulSetGenerationMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeStatefulSetGenerationMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStatefulSetReplicasMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeStatefulSetReplicasMismatch.md",
+    "sub_url": "kubernetes/KubeStatefulSetReplicasMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeStatefulSetReplicasMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeStatefulSetUpdateNotRolledOut.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeStatefulSetUpdateNotRolledOut.md",
+    "sub_url": "kubernetes/KubeStatefulSetUpdateNotRolledOut.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeStatefulSetUpdateNotRolledOut.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "KubeVersionMismatch.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\kubernetes\\KubeVersionMismatch.md",
+    "sub_url": "kubernetes/KubeVersionMismatch.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/kubernetes/KubeVersionMismatch.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeClockNotSynchronising.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeClockNotSynchronising.md",
+    "sub_url": "node/NodeClockNotSynchronising.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeClockNotSynchronising.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeClockSkewDetected.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeClockSkewDetected.md",
+    "sub_url": "node/NodeClockSkewDetected.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeClockSkewDetected.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeFileDescriptorLimit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeFileDescriptorLimit.md",
+    "sub_url": "node/NodeFileDescriptorLimit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeFileDescriptorLimit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeFilesystemAlmostOutOfFiles.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeFilesystemAlmostOutOfFiles.md",
+    "sub_url": "node/NodeFilesystemAlmostOutOfFiles.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeFilesystemAlmostOutOfFiles.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio", "error"
+    ]
+  },
+  {
+    "file_name": "NodeFilesystemAlmostOutOfSpace.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeFilesystemAlmostOutOfSpace.md",
+    "sub_url": "node/NodeFilesystemAlmostOutOfSpace.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeFilesystemAlmostOutOfSpace.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio", "latency"
+    ]
+  },
+  {
+    "file_name": "NodeFilesystemFilesFillingUp.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeFilesystemFilesFillingUp.md",
+    "sub_url": "node/NodeFilesystemFilesFillingUp.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeFilesystemFilesFillingUp.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "NodeFilesystemSpaceFillingUp.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeFilesystemSpaceFillingUp.md",
+    "sub_url": "node/NodeFilesystemSpaceFillingUp.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeFilesystemSpaceFillingUp.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio", "latency"
+    ]
+  },
+  {
+    "file_name": "NodeHighNumberConntrackEntriesUsed.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeHighNumberConntrackEntriesUsed.md",
+    "sub_url": "node/NodeHighNumberConntrackEntriesUsed.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeHighNumberConntrackEntriesUsed.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Socket",
+    "trigger_metrics": [
+      "socket"
+    ]
+  },
+  {
+    "file_name": "NodeNetworkReceiveErrs.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeNetworkReceiveErrs.md",
+    "sub_url": "node/NodeNetworkReceiveErrs.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeNetworkReceiveErrs.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Loss",
+    "trigger_metrics": [
+      "error"
+    ]
+  },
+  {
+    "file_name": "NodeNetworkTransmitErrs.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeNetworkTransmitErrs.md",
+    "sub_url": "node/NodeNetworkTransmitErrs.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeNetworkTransmitErrs.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Loss",
+    "trigger_metrics": [
+      "cpu",
+      "error"
+    ]
+  },
+  {
+    "file_name": "NodeRAIDDegraded.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeRAIDDegraded.md",
+    "sub_url": "node/NodeRAIDDegraded.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeRAIDDegraded.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio",
+      "error"
+    ]
+  },
+  {
+    "file_name": "NodeRAIDDiskFailure.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeRAIDDiskFailure.md",
+    "sub_url": "node/NodeRAIDDiskFailure.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeRAIDDiskFailure.md",
+    "is_relevant": true,
+    "mapped_fault_type": "Disk",
+    "trigger_metrics": [
+      "diskio", "error"
+    ]
+  },
+  {
+    "file_name": "NodeTextFileCollectorScrapeError.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\node\\NodeTextFileCollectorScrapeError.md",
+    "sub_url": "node/NodeTextFileCollectorScrapeError.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/node/NodeTextFileCollectorScrapeError.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusBadConfig.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusBadConfig.md",
+    "sub_url": "prometheus/PrometheusBadConfig.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusBadConfig.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusDuplicateTimestamps.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusDuplicateTimestamps.md",
+    "sub_url": "prometheus/PrometheusDuplicateTimestamps.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusDuplicateTimestamps.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusErrorSendingAlertsToAnyAlertmanager.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusErrorSendingAlertsToAnyAlertmanager.md",
+    "sub_url": "prometheus/PrometheusErrorSendingAlertsToAnyAlertmanager.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusErrorSendingAlertsToAnyAlertmanager.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusErrorSendingAlertsToSomeAlertmanagers.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusErrorSendingAlertsToSomeAlertmanagers.md",
+    "sub_url": "prometheus/PrometheusErrorSendingAlertsToSomeAlertmanagers.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusErrorSendingAlertsToSomeAlertmanagers.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusLabelLimitHit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusLabelLimitHit.md",
+    "sub_url": "prometheus/PrometheusLabelLimitHit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusLabelLimitHit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusMissingRuleEvaluations.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusMissingRuleEvaluations.md",
+    "sub_url": "prometheus/PrometheusMissingRuleEvaluations.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusMissingRuleEvaluations.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusNotConnectedToAlertmanagers.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusNotConnectedToAlertmanagers.md",
+    "sub_url": "prometheus/PrometheusNotConnectedToAlertmanagers.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusNotConnectedToAlertmanagers.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusNotificationQueueRunningFull.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusNotificationQueueRunningFull.md",
+    "sub_url": "prometheus/PrometheusNotificationQueueRunningFull.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusNotificationQueueRunningFull.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusNotIngestingSamples.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusNotIngestingSamples.md",
+    "sub_url": "prometheus/PrometheusNotIngestingSamples.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusNotIngestingSamples.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOutOfOrderTimestamps.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusOutOfOrderTimestamps.md",
+    "sub_url": "prometheus/PrometheusOutOfOrderTimestamps.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusOutOfOrderTimestamps.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusRemoteStorageFailures.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusRemoteStorageFailures.md",
+    "sub_url": "prometheus/PrometheusRemoteStorageFailures.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusRemoteStorageFailures.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": [
+      "error"
+    ]
+  },
+  {
+    "file_name": "PrometheusRemoteWriteBehind.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusRemoteWriteBehind.md",
+    "sub_url": "prometheus/PrometheusRemoteWriteBehind.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusRemoteWriteBehind.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusRemoteWriteDesiredShards.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusRemoteWriteDesiredShards.md",
+    "sub_url": "prometheus/PrometheusRemoteWriteDesiredShards.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusRemoteWriteDesiredShards.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusRuleFailures.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusRuleFailures.md",
+    "sub_url": "prometheus/PrometheusRuleFailures.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusRuleFailures.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusTargetLimitHit.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusTargetLimitHit.md",
+    "sub_url": "prometheus/PrometheusTargetLimitHit.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusTargetLimitHit.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusTargetSyncFailure.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusTargetSyncFailure.md",
+    "sub_url": "prometheus/PrometheusTargetSyncFailure.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusTargetSyncFailure.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusTSDBCompactionsFailing.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusTSDBCompactionsFailing.md",
+    "sub_url": "prometheus/PrometheusTSDBCompactionsFailing.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusTSDBCompactionsFailing.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusTSDBReloadsFailing.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus\\PrometheusTSDBReloadsFailing.md",
+    "sub_url": "prometheus/PrometheusTSDBReloadsFailing.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus/PrometheusTSDBReloadsFailing.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "ConfigReloaderSidecarErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\ConfigReloaderSidecarErrors.md",
+    "sub_url": "prometheus-operator/ConfigReloaderSidecarErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/ConfigReloaderSidecarErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorListErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorListErrors.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorListErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorListErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorNodeLookupErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorNodeLookupErrors.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorNodeLookupErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorNodeLookupErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorNotReady.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorNotReady.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorNotReady.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorNotReady.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorReconcileErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorReconcileErrors.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorReconcileErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorReconcileErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorRejectedResources.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorRejectedResources.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorRejectedResources.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorRejectedResources.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorSyncFailed.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorSyncFailed.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorSyncFailed.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorSyncFailed.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  },
+  {
+    "file_name": "PrometheusOperatorWatchErrors.md",
+    "local_path": "D:\\projects\\runbooks\\content\\runbooks\\prometheus-operator\\PrometheusOperatorWatchErrors.md",
+    "sub_url": "prometheus-operator/PrometheusOperatorWatchErrors.md",
+    "github_url": "https://github.com/prometheus-operator/runbooks/blob/main/docs/prometheus-operator/PrometheusOperatorWatchErrors.md",
+    "is_relevant": false,
+    "mapped_fault_type": null,
+    "trigger_metrics": []
+  }
+]

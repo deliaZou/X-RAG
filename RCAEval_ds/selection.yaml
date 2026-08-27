@@ -1,0 +1,6 @@
+layer1:
+  algorithm: PCC
+  pca_n_components: 0.95
+  random_state: 0
+  threshold: quantile_on_train_scores
+  eval_quantile: 0.999          # 五折折感知标定, 全部选出 0.999

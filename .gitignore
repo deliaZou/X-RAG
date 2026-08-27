@@ -9,3 +9,14 @@ __pycache__/
 *.log
 .env
 drafts/
+notebooks/
+RCAEval_ds/chroma_re2ob_kb
+RCAEval_ds/RE2-OB
+RCAEval_ds/RE2-SS
+RCAEval_ds/RE2-TT
+RCAEval_ds/trans-OB
+RCAEval_ds/trans-OB_his(loss分类错误）
+RCAEval_ds/trans-TT
+RCAEval_ds/history_scripts
+knowledge_base/chroma_re2ob_kb__all-MiniLM-L6-v2
+L3/output
