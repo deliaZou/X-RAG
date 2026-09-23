@@ -10,13 +10,27 @@ audit_kb_docs.py
 """
 
 import argparse
+import os
+
 import chromadb
-from build_knowledge_base import get_chroma_path, COLLECTION_NAME
 import json
 from collections import Counter, defaultdict
+from configs.paths import DOCS_CACHE_PATH, VECTOR_DB_DIR
+
 
 SUSPICIOUS_LEN = 50  # 正文短于这个字符数,标记为可疑(大概率生成失败或内容被截断)
+COLLECTION_NAME = "re2ob_knowledge"
 
+
+def get_chroma_path(embed_model: str) -> str:
+    """
+    按 embedding 模型区分向量库路径,避免换模型时互相覆盖,
+    也让"固定知识库,换 embedding 模型对比"这个受控实验能同时保留多份结果。
+    可用环境变量 XRAG_KB_ROOT 覆盖基准目录。
+    """
+    slug = embed_model.replace("/", "_").replace(":", "_")
+    # base = os.getenv("XRAG_KB_ROOT", VECTOR_DB_DIR)
+    return os.path.join(VECTOR_DB_DIR, f"chroma_re2ob_kb__{slug}")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -152,5 +166,5 @@ def analyze_metadata(kb_cache_path="kb_docs_cache.json"):
     }
 
 if __name__ == "__main__":
-    # main()
-    analyze_metadata()
+    main()
+    # analyze_metadata("D:\projects\X-RAG\data\KnowledgeBase_processed\kb_docs_cache_20260921_182510.json")

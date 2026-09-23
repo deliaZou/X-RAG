@@ -19,17 +19,6 @@ import json
 import os
 
 
-def _top_root_cause_chain(l2_output: Dict, top_k: int = 5) -> List[str]:
-    """
-    按 shap 值降序抽取 metric name，用于构建检索 query。
-    从 metrics_list 中取 top_k 个（忽略 shap == 0 的候选）。
-    """
-    metrics_list = l2_output.get("metrics_list", [])
-    # 过滤 shap > 0 的指标，按 shap 降序排序
-    positive_metrics = [m for m in metrics_list if m.get("shap", 0) > 0]
-    sorted_metrics = sorted(positive_metrics, key=lambda x: x["shap"], reverse=True)
-    return [m["name"] for m in sorted_metrics[:top_k]]
-
 
 def _l2_candidates_ranked(l2_output: Dict, top_k: int = 10) -> List[Dict]:
     """

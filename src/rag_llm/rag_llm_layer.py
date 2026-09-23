@@ -28,9 +28,8 @@ import re
 import os
 import sys
 from openai import OpenAI
-from dotenv import load_dotenv
-
-load_dotenv()
+from src.config import llm_config   # 导入即完成 .env 加载
+llm_config.show()
 
 # 如果 ragas 执着于老路径,手动把它导向新路径
 # try:
@@ -50,8 +49,7 @@ if str(project_root) not in sys.path:
     sys.path.append(str(project_root))
 
 # 3. 正常导入 knowledge_base 中的模块或函数
-from knowledge_base.build_knowledge_base import KnowledgeBase
-# from load_knowledge_base import KnowledgeBase, stratified_sample_for_layer3
+from src.knowledge_base.retriever import KnowledgeBase
 
 MAX_CONTEXT_CHARS = 400
 RAGAS_SAMPLE_MIN = 3
@@ -179,10 +177,10 @@ class RAGDiagnosticLayer:
         self.top_k = top_k_each
         self._eval_records: list[dict] = []
 
-        self.api_key = os.getenv("LLM_API_KEY")
-        self.base_url = os.getenv("LLM_BASE_URL")
-        self.model = os.getenv("LLM_MODEL_ID")
-        self.timeout = int(os.getenv("LLM_TIMEOUT", "60"))
+        self.api_key = llm_config.api_key
+        self.base_url = llm_config.base_url
+        self.model = llm_config.llm_model
+        self.timeout = llm_config.timeout
         if not self.api_key:
             raise RuntimeError("未检测到环境变量 LLM_API_KEY,检查 .env 文件")
         self._client = OpenAI(api_key=self.api_key, base_url=self.base_url, timeout=self.timeout)
@@ -293,7 +291,7 @@ class RAGDiagnosticLayer:
         if collect_eval:
             all_context_texts = [d["text"] for docs in context.values() for d in docs]
             self._eval_records.append({
-                "question": query,
+                # "question": query,
                 "answer": result.get("root_cause_explanation", ""),
                 "contexts": all_context_texts,
                 "ground_truth": "",
@@ -630,10 +628,10 @@ if __name__ == "__main__":
         # 单条 case 也能算 AC@1/AC@5,只是 fault_type macro-average 这里只有 1 类
         acc = layer3.compute_root_cause_accuracy([report])
         _print_accuracy(acc)
-
-        with open(generate_output_filename(args.l2_json.split("\\")[-1]), "w", encoding="utf-8") as f:
+        filename = generate_output_filename(args.l2_json.split("\\")[-1])
+        with open(filename, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
-        print("\n完整报告已保存到 sample_l3_report_l2.json")
+        print(f"\n完整报告已保存到 {filename}")
 
     elif args.mode == "batch":
         from l2_adapter import load_l2_dir
@@ -644,7 +642,9 @@ if __name__ == "__main__":
         xai_reports = load_l2_dir(args.l2_dir, candidate_pool_size=args.candidate_pool_size)
 
         results = layer3.diagnose_batch(xai_reports, collect_eval=False)
-        with open("batch_l3_reports.json", "w", encoding="utf-8") as f:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+
+        with open(f"batch_l3_reports_{timestamp}.json", "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"\n✅ {len(results)} 条报告已保存到 batch_l3_reports.json")
         for r in results:
@@ -652,7 +652,7 @@ if __name__ == "__main__":
 
         acc = layer3.compute_root_cause_accuracy(results)
         _print_accuracy(acc)
-        with open("l3_accuracy.json", "w", encoding="utf-8") as f:
+        with open(f"batch_l3_accuracy_{timestamp}.json", "w", encoding="utf-8") as f:
             json.dump(acc, f, indent=2, ensure_ascii=False)
         print("\n✅ AC@k 统计已保存到 l3_accuracy.json")
 
@@ -666,7 +666,9 @@ if __name__ == "__main__":
 
         results, ragas_scores = layer3.diagnose_batch_with_ragas(xai_reports, run_ragas=True)
 
-        with open("full_l3_reports.json", "w", encoding="utf-8") as f:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+        filename = f"full_l3_reports__{timestamp}.json"
+        with open(filename, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
         print(f"\n✅ 诊断报告已保存到 full_l3_reports.json")
 
@@ -677,6 +679,6 @@ if __name__ == "__main__":
 
         acc = layer3.compute_root_cause_accuracy(results)
         _print_accuracy(acc)
-        with open("l3_accuracy.json", "w", encoding="utf-8") as f:
+        with open(f"l3_accuracy_{timestamp}.json", "w", encoding="utf-8") as f:
             json.dump(acc, f, indent=2, ensure_ascii=False)
         print("\n✅ AC@k 统计已保存到 l3_accuracy.json")

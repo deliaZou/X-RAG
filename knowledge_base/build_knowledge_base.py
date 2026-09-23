@@ -37,6 +37,8 @@ from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from configs.paths import get_chroma_db_path
+
 load_dotenv()
 
 EMBED_MODEL     = "all-MiniLM-L6-v2"
@@ -50,15 +52,15 @@ _MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCS_CACHE_PATH = os.path.join(_MODULE_DIR, "kb_docs_cache.json")
 
 
-def get_chroma_path(embed_model: str) -> str:
-    """
-    按 embedding 模型区分向量库路径,避免换模型时互相覆盖,
-    也让"固定知识库,换 embedding 模型对比"这个受控实验能同时保留多份结果。
-    可用环境变量 XRAG_KB_ROOT 覆盖基准目录。
-    """
-    slug = embed_model.replace("/", "_").replace(":", "_")
-    base = os.getenv("XRAG_KB_ROOT", _MODULE_DIR)
-    return os.path.join(base, f"chroma_re2ob_kb__{slug}")
+# def get_chroma_path(embed_model: str) -> str:
+#     """
+#     按 embedding 模型区分向量库路径,避免换模型时互相覆盖,
+#     也让"固定知识库,换 embedding 模型对比"这个受控实验能同时保留多份结果。
+#     可用环境变量 XRAG_KB_ROOT 覆盖基准目录。
+#     """
+#     slug = embed_model.replace("/", "_").replace(":", "_")
+#     base = os.getenv("XRAG_KB_ROOT", _MODULE_DIR)
+#     return os.path.join(base, f"chroma_re2ob_kb__{slug}")
 
 ALL_TYPES = ["feature", "playbook", "playbook_ext", "alert", "algo", "topology"]
 TYPE_TAG  = {  # 内部 type 字段命名,和 rag_llm_layer.py 的四类 (+topology) 对齐
@@ -174,44 +176,6 @@ def _extract_services_and_metrics(metrics_list: List[str]) -> tuple[List[str], L
             metrics_seen.add(metric)
 
     return services_out, metrics_out
-
-# Online Boutique 服务拓扑,依据官方 README 改写 (转述,非原文摘抄) 废弃
-SERVICE_TOPOLOGY_abandom = [
-    {"service": "frontend", "language": "Go",
-     "role": "对外 HTTP 网关,渲染网页,自动为所有用户生成 session,不需要登录",
-     "calls": ["checkoutservice", "cartservice", "productcatalogservice",
-               "recommendationservice", "adservice", "currencyservice", "shippingservice"]},
-    {"service": "checkoutservice", "language": "Go",
-     "role": "订单编排入口,取出用户购物车、生成订单,并协调支付、物流、邮件三个下游服务",
-     "calls": ["cartservice", "paymentservice", "shippingservice", "emailservice", "currencyservice"]},
-    {"service": "cartservice", "language": "C#",
-     "role": "购物车存取,数据落在 redis 里",
-     "calls": ["redis"]},
-    {"service": "productcatalogservice", "language": "Go",
-     "role": "商品目录查询与搜索,数据来自本地 JSON 文件,不依赖其他服务",
-     "calls": []},
-    {"service": "currencyservice", "language": "Node.js",
-     "role": "货币换算,是整个系统里 QPS 最高的服务之一",
-     "calls": []},
-    {"service": "paymentservice", "language": "Node.js",
-     "role": "模拟信用卡扣款,返回交易号",
-     "calls": []},
-    {"service": "shippingservice", "language": "Go",
-     "role": "根据购物车内容估算运费并模拟发货",
-     "calls": []},
-    {"service": "emailservice", "language": "Python",
-     "role": "发送订单确认邮件 (模拟)",
-     "calls": []},
-    {"service": "recommendationservice", "language": "Python",
-     "role": "根据购物车内容推荐其他商品",
-     "calls": ["productcatalogservice"]},
-    {"service": "adservice", "language": "Java",
-     "role": "根据上下文关键词返回广告文案",
-     "calls": []},
-    {"service": "redis", "language": "-",
-     "role": "cartservice 的后端存储,本身不是业务逻辑服务",
-     "calls": []},
-]
 
 # Online Boutique 服务拓扑新 来源https://github.com/GoogleCloudPlatform/microservices-demo
 SERVICE_TOPOLOGY = {
@@ -737,7 +701,7 @@ class KnowledgeBase:
 
     def __init__(self, embed_model: str = EMBED_MODEL, chroma_path: Optional[str] = None):
         self.embed_model = embed_model
-        resolved_path = chroma_path or get_chroma_path(embed_model)
+        resolved_path = chroma_path or get_chroma_db_path(embed_model)
         db = chromadb.PersistentClient(path=resolved_path)
         self.collection = db.get_collection(COLLECTION_NAME)
         self.embedder = SentenceTransformer(embed_model)
