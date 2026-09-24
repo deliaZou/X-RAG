@@ -20,3 +20,4 @@ RCAEval_ds/trans-TT
 RCAEval_ds/history_scripts
 knowledge_base/chroma_re2ob_kb__all-MiniLM-L6-v2
 L3/output
+src/rag_llm/output

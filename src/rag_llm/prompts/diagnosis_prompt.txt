@@ -1,0 +1,92 @@
+## Anomaly Report
+
+## Pipeline Context
+- **Layer 1 (Detection)**: PCC (Principal Component Classifier) detects anomalies in multivariate time-series metrics.
+- **Layer 2 (Explanation)**: KernelSHAP explains each anomaly by computing Shapley values for all metrics.
+- **Shapley Value Definition**: Each metric's Shapley value represents its **marginal contribution** to the anomaly score. Higher values indicate the metric contributed more to the anomaly being flagged.
+- **⚠️ SHAP Limitations**:
+  - SHAP measures statistical correlation, NOT causation
+  - A high SHAP metric could be the root cause, OR a symptom/downstream effect of the true root cause
+  - SHAP does not capture temporal propagation or service dependency relationships
+  - Use SHAP as a starting point, but validate against fault patterns and service topology
+
+### Anomaly Details
+Timestamp        : $timestamp
+Detection result : $detection_result
+Model score      : $model_score  (higher = more anomalous)
+Root cause chain : $root_cause_chain
+Fidelity         : $fidelity
+Stability        : $stability
+XAI gate action  : $xai_gateway_suggestion
+
+---
+## L2 Candidate Root Causes (ranked by SHAP magnitude)
+$l2_candidates
+
+---
+## Retrieved Knowledge
+
+### [A] Ops Playbooks
+$playbooks
+
+### [B] Service Topology
+$topology_docs
+
+---
+
+## Known Fault Patterns (from microservice fault injection research)
+
+**Resource faults (CPU / MEM / DISK / SOCKET):**
+- The fault manifests directly in the resource metric
+- Example: cpu fault → emailservice_cpu shows high SHAP
+- Other metrics (latency) may show secondary effects
+
+**Network fault (DELAY):**
+- The fault manifests directly in latency metric
+- Example: delay fault → checkoutservice_latency shows high SHAP
+- Error metric is usually unaffected
+
+**Network fault (LOSS):**
+- PRIMARY indicator: latency metric (currencyservice_latency shows high SHAP)
+  - Timeouts and retries cause latency elevation
+- SECONDARY indicator: error metric may show minor elevation
+  - Some requests may fail completely
+
+**Propagation pattern:**
+- A resource fault (CPU/MEM) in an upstream service → downstream services show latency elevation
+- A latency anomaly in a leaf service → anomaly is self-contained, not propagated
+- Use the Service Topology to determine propagation direction
+
+---
+
+## Task
+
+Using the Shapley values (L2 candidates), known fault patterns, and service topology above,
+identify the most likely root cause from the L2 candidates.
+
+---
+
+## Output Format
+
+Produce a diagnosis JSON with EXACTLY these keys:
+
+{
+  "root_cause": "<service_metric>",
+  "root_cause_ranking": [
+    {"rank": 1, "name": "<service_metric>", "service": "<service>", "metric": "<metric>", "reason": "<why this is ranked here>"},
+    ...
+  ],
+  "confidence": <float 0.0-1.0>,
+  "severity": "critical" | "high" | "medium" | "low",
+  "root_cause_explanation": "<2-3 sentences explaining your reasoning>",
+  "evidence_used": ["<playbook or topology evidence>", ...],
+  "recommended_actions": ["<action>", ...],
+  "escalation_required": true | false,
+  "xai_quality_flag": "<note on fidelity/stability>"
+}
+
+**IMPORTANT:**
+- `root_cause` must be a single service_metric combination
+- All candidates MUST come from the L2 candidates list
+
+Output JSON only.

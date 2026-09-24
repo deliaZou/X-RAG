@@ -24,6 +24,9 @@ class LLMConfig:
         self.base_url = os.getenv("LLM_BASE_URL")
         self.llm_model = os.getenv("LLM_MODEL_ID", "deepseek-chat")
         self.timeout = int(os.getenv("LLM_TIMEOUT", "60"))
+        self.ragas_api_key = os.getenv("RAGAS_LLM_API_KEY")
+        self.ragas_base_url = os.getenv("RAGAS_LLM_BASE_URL")
+        self.ragas_model = os.getenv("RAGAS_LLM_MODEL_ID", "deepseek-chat")
 
         # 关键配置缺失时尽早报错，避免运行时才出问题
         if not self.api_key:

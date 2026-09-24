@@ -1,0 +1,11 @@
+# Layer3 RAG-LLM 诊断层超参数
+# 改动这里的值前建议先复制一份带日期/版本号的备份,方便让某次实验结果
+# (l3_accuracy_*.json / ragas 分数) 和当时用的配置对应得上,不用回头翻 git log。
+
+max_context_chars: 400     # 每条检索文档喂给 LLM 前的截断长度
+ragas_sample_min: 3        # 跑 RAGAS 评估所需的最少样本数
+temperature: 0.1           # LLM 生成温度
+top_k_each: 2               # 每类知识检索返回的文档数 (目前只有 playbooks 在用)
+candidate_pool_size: 10    # 喂给 LLM 重排的 L2 候选池大小,和评估窗口 AC@1/3/5 是两件事,
+                            # 建议先在 train-fold 上对 L2 做 K=5/8/10/15/20 sweep 再定这个数
+query_chain_size: 5         # 用于构建检索 query / root_cause_chain 的 metric 数量
