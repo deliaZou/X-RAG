@@ -11,13 +11,9 @@
   - Use SHAP as a starting point, but validate against fault patterns and service topology
 
 ### Anomaly Details
-Timestamp        : $timestamp
-Detection result : $detection_result
 Model score      : $model_score  (higher = more anomalous)
 Root cause chain : $root_cause_chain
 Fidelity         : $fidelity
-Stability        : $stability
-XAI gate action  : $xai_gateway_suggestion
 
 ---
 ## L2 Candidate Root Causes (ranked by SHAP magnitude)
@@ -71,18 +67,11 @@ identify the most likely root cause from the L2 candidates.
 Produce a diagnosis JSON with EXACTLY these keys:
 
 {
-  "root_cause": "<service_metric>",
   "root_cause_ranking": [
-    {"rank": 1, "name": "<service_metric>", "service": "<service>", "metric": "<metric>", "reason": "<why this is ranked here>"},
+    {"rank": 1, "name": "<service_metric>"},
     ...
   ],
-  "confidence": <float 0.0-1.0>,
-  "severity": "critical" | "high" | "medium" | "low",
   "root_cause_explanation": "<2-3 sentences explaining your reasoning>",
-  "evidence_used": ["<playbook or topology evidence>", ...],
-  "recommended_actions": ["<action>", ...],
-  "escalation_required": true | false,
-  "xai_quality_flag": "<note on fidelity/stability>"
 }
 
 **IMPORTANT:**

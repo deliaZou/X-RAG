@@ -72,7 +72,7 @@ if str(project_root) not in sys.path:
 # 3. 正常导入 knowledge_base 中的模块或函数
 from src.knowledge_base.retriever import KnowledgeBase
 
-from l2_adapter import load_l2_input
+from l2_adapter import load_l2_input, _split_name
 from l3_config import load_l3_config
 from prompt_loader import load_prompt
 
@@ -107,6 +107,7 @@ class RAGDiagnosticLayer:
 
         self._system_prompt = load_prompt("diagnosis_system").template
         self._diagnosis_template = load_prompt("diagnosis_prompt")
+        self._call_stats = {"total": 0, "api_error": 0, "json_parse_error": 0, "schema_incomplete": 0}
 
     # ────────────────────────────────────────────────────
     # Pre-Retrieval
@@ -145,7 +146,7 @@ class RAGDiagnosticLayer:
             lines.append(
                 f"[rank {c.get('rank')}] {c.get('name')} "
                 f"(service={c.get('service')}, metric={c.get('metric')}, "
-                f"shap={c.get('shap')})"
+                f"shap={c.get('shap')}, direction={c.get('direction')}))"
             )
         return "\n".join(lines)
 
@@ -168,21 +169,27 @@ class RAGDiagnosticLayer:
     # Generation
     # ────────────────────────────────────────────────────
     def _call_llm(self, prompt: str) -> dict:
+        self._call_stats["total"] += 1
         try:
             response = self._client.chat.completions.create(
                 model=self.model,
-                messages=[
-                    {"role": "system", "content": self._system_prompt},
-                    {"role": "user", "content": prompt},
-                ],
+                messages=[{"role": "system", "content": self._system_prompt},
+                          {"role": "user", "content": prompt},],
                 temperature=self.config["temperature"],
                 response_format={"type": "json_object"},
             )
-            raw = response.choices[0].message.content.strip()
-            raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-            return json.loads(raw)
         except Exception as e:
-            print(f"[-] LLM 调用失败: {e}")
+            self._call_stats["api_error"] += 1
+            print(f"[-] LLM 调用失败 (API): {e}")
+            raise
+
+        raw = response.choices[0].message.content.strip()
+        raw = raw.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError as e:
+            self._call_stats["json_parse_error"] += 1
+            print(f"[-] LLM output not illegal JSON: {e}\nOriginal output's first 200 characters: {raw[:200]}")
             raise
 
     # ────────────────────────────────────────────────────
@@ -194,7 +201,27 @@ class RAGDiagnosticLayer:
         context = self._retrieve(chain, current_case_id=case_id)
         prompt = self._build_prompt(xai_report, context)
         result = self._call_llm(prompt)
+        # Schema / 字段不完整 校验
+        ranking = result.get("root_cause_ranking")
+        problems = []
+        if not result.get("root_cause_explanation"):
+            problems.append("missing_explanation")
+        if not isinstance(ranking, list) or not ranking:
+            problems.append("empty_ranking")
+        else:
+            for c in ranking:           # 解析result
+                service, metric = _split_name(c.get("name", ""))
+                c["service"] = service
+                c["metric"] = metric
+                if metric == "unknown":
+                    problems.append(f"malformed_name:{c.get('name')}")
 
+        if problems:
+            self._call_stats["schema_incomplete"] += 1
+            print(f"schema incomplete: {problems}")
+
+        # 解析result
+        result["root_cause"] = result.get("root_cause_ranking", [])[0]["name"] if result["root_cause_ranking"] else None
         result["source_xai_report"] = xai_report
         max_chars = self.config["max_context_chars"]
         # retrieved_context 存的是截断后的纯文本,既用于打印/调试,也是
@@ -415,12 +442,12 @@ if __name__ == "__main__":
 
     # l2_path = args.path
     # output = args.output_dir
-    ragas = True
+    ragas = None
     verbose = None
     print_limit = None
 
     # l2_path = "D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
-    l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test"
+    l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\checkoutservice_disk_3.json"
     output = "output"
 
     config = load_l3_config()
