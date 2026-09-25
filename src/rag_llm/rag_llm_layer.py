@@ -447,7 +447,8 @@ if __name__ == "__main__":
     print_limit = None
 
     # l2_path = "D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
-    l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\checkoutservice_disk_3.json"
+    # l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\checkoutservice_disk_3.json"
+    l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
     output = "output"
 
     config = load_l3_config()

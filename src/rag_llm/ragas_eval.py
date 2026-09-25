@@ -45,7 +45,6 @@ DIAGNOSIS_QUESTION = "What is the most likely root cause of this anomaly, and wh
 
 ALL_METRIC_NAMES = ("faithfulness", "answer_relevance", "context_precision")
 
-
 def _context_as_texts(retrieved_context: dict) -> list[str]:
     """
     retrieved_context 里每个 value 可能是 list[str] (playbooks 已经在
@@ -73,12 +72,16 @@ def _ground_truth_text(gt: dict) -> str:
 
     fault_key = gt.get("fault", "").capitalize()  # L2 json 里是 "delay" 这种全小写,FAULT_TYPES 的 key 是 "Delay"
     pattern = FAULT_TYPES.get(fault_key, {}).get("pattern", "")
+    metric_raw = gt.get("metric", "unknown")
+    service = gt.get("service", "unknown")
+    metric_short = metric_raw.replace(f"{service}_", "") if metric_raw.startswith(f"{service}_") else metric_raw
 
     text = (
-        f"The root cause is {gt.get('metric', 'unknown')} "
-        f"in the {gt.get('service', 'unknown')} service, "
+        f"The root cause is {metric_short} "
+        f"in the {service} service, "
         f"caused by a {gt.get('fault', 'unknown')} fault."
     )
+
     if pattern:
         text += f" Expected pattern: {pattern}"
     return text
@@ -126,6 +129,7 @@ def run_ragas(records: list[dict], metrics: list[str] = None, config: dict = Non
         from ragas.metrics._faithfulness import Faithfulness
         from ragas.metrics._answer_relevance import AnswerRelevancy
         from ragas.metrics._context_precision import ContextPrecision
+        from ragas.metrics._answer_correctness import AnswerCorrectness
         from ragas.llms import LangchainLLMWrapper
         from ragas.embeddings import LangchainEmbeddingsWrapper
         from langchain_openai import ChatOpenAI
@@ -141,7 +145,7 @@ def run_ragas(records: list[dict], metrics: list[str] = None, config: dict = Non
     all_metrics = {
         "faithfulness": Faithfulness(),
         "answer_relevance": AnswerRelevancy(),
-        "context_precision": ContextPrecision(),
+        "answer_correctness": AnswerCorrectness(),
     }
     metric_names = [m for m in (metrics or list(all_metrics.keys())) if m in all_metrics]
     selected = [all_metrics[m] for m in metric_names]
@@ -188,7 +192,7 @@ def run_ragas(records: list[dict], metrics: list[str] = None, config: dict = Non
     for m in metric_names:
         summary[m] = round(float(df_res[m].mean()), 4) if m in df_res.columns else None
 
-    weights = {"faithfulness": 0.4, "answer_relevance": 0.4, "context_precision": 0.2}
+    weights = {"faithfulness": 0.4, "answer_relevance": 0.4, "answer_correctness": 0.2}
     used_weight = sum(weights[m] for m in metric_names if m in weights)
     if used_weight > 0:
         summary["overall_confidence"] = round(
@@ -218,7 +222,7 @@ if __name__ == "__main__":
     # parser.add_argument("--path", required=True,
     #                      help="诊断报告 json 文件路径 (run_pipeline() 存的 xxx_reports.json)")
     # parser.add_argument("--metrics", default=None,
-    #                      help="逗号分隔,取值来自 faithfulness,answer_relevance,context_precision;"
+    #                      help="逗号分隔,取值来自 faithfulness,answer_relevance,answer_correctness;"
     #                           "不传则三个都跑")
     # parser.add_argument("--output", default=None,
     #                      help="评估结果保存路径,默认在报告同目录下把 _reports.json 换成 _ragas.json")
@@ -230,7 +234,7 @@ if __name__ == "__main__":
     # result = run_ragas(records, metrics=metrics)
 
     l3_path = "D:\\projects\\X-RAG\\src\\rag_llm\output\\20260923_180802_reports.json"
-    metrics = ["context_precision"]  # 取值来自 faithfulness,answer_relevance,context_precision;"
+    metrics = ["context_precision"]  # 取值来自 faithfulness,answer_relevance,answer_correctness;"
     reports = load_reports(l3_path)
     records = build_eval_records(reports)
     result = run_ragas(records, metrics=metrics)
