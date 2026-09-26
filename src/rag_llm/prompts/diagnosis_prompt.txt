@@ -4,19 +4,18 @@
 - **Layer 1 (Detection)**: PCC (Principal Component Classifier) detects anomalies in multivariate time-series metrics.
 - **Layer 2 (Explanation)**: KernelSHAP explains each anomaly by computing Shapley values for all metrics.
 - **Shapley Value Definition**: Each metric's Shapley value represents its **marginal contribution** to the anomaly score. Higher values indicate the metric contributed more to the anomaly being flagged.
-- **⚠️ SHAP Limitations**:
-  - SHAP measures statistical correlation, NOT causation
-  - A high SHAP metric could be the root cause, OR a symptom/downstream effect of the true root cause
-  - SHAP does not capture temporal propagation or service dependency relationships
-  - Use SHAP as a starting point, but validate against fault patterns and service topology
+- **⚠️ SHAP Limitations — READ CAREFULLY**:
+  - SHAP measures statistical correlation, NOT causation.
+  - A high-SHAP metric could be the root cause, OR a symptom/downstream effect.
+  - **Empirically, SHAP ranking is known to under-rank certain resource faults (e.g. CPU) — the true root cause is often NOT the top-ranked candidate.** Do not assume rank 1 is correct by default.
+  - The candidate list below is presented in RANDOM order, not SHAP order, specifically so you evaluate each one on its merits rather than its position.
 
 ### Anomaly Details
-Model score      : $model_score  (higher = more anomalous)
-Root cause chain : $root_cause_chain
-Fidelity         : $fidelity
+Model score : $model_score  (higher = more anomalous)
+Fidelity    : $fidelity
 
 ---
-## L2 Candidate Root Causes (ranked by SHAP magnitude)
+## L2 Candidate Root Causes (SHAP magnitude shown, order randomized — NOT a ranking)
 $l2_candidates
 
 ---
@@ -31,6 +30,7 @@ $topology_docs
 ---
 
 ## Known Fault Patterns (from microservice fault injection research)
+Use these as **hypothesis tests for EACH candidate**, not just to confirm the top SHAP one.
 
 **Resource faults (CPU / MEM / DISK / SOCKET):**
 - The fault manifests directly in the resource metric
@@ -60,22 +60,22 @@ $topology_docs
 Using the Shapley values (L2 candidates), known fault patterns, and service topology above,
 identify the most likely root cause from the L2 candidates.
 
+
+Then select the single most likely root cause — it does NOT have to be the highest-SHAP candidate if the evidence points elsewhere.
+
 ---
 
 ## Output Format
 
-Produce a diagnosis JSON with EXACTLY these keys:
-
 {
   "root_cause_ranking": [
     {"rank": 1, "name": "<service_metric>"},
-    ...
+    {"rank": 2, "name": "<service_metric>"}
   ],
   "root_cause_explanation": "<2-3 sentences explaining your reasoning>",
 }
 
 **IMPORTANT:**
-- `root_cause` must be a single service_metric combination
-- All candidates MUST come from the L2 candidates list
-
-Output JSON only.
+- All candidates MUST come from the L2 candidates list.
+- playbook_support: use "strong" if the playbook explicitly describes this fault type; "weak" if only loosely related; "none" if no relevant playbook was retrieved.
+- Output JSON only.

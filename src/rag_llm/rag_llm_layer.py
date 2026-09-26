@@ -106,7 +106,7 @@ class RAGDiagnosticLayer:
         self._client = OpenAI(api_key=self.api_key, base_url=self.base_url, timeout=self.timeout)
 
         self._system_prompt = load_prompt("diagnosis_system").template
-        self._diagnosis_template = load_prompt("diagnosis_prompt")
+        self._diagnosis_template = load_prompt(self.config["prompt"])
         self._call_stats = {"total": 0, "api_error": 0, "json_parse_error": 0, "schema_incomplete": 0}
 
     # ────────────────────────────────────────────────────
@@ -144,9 +144,10 @@ class RAGDiagnosticLayer:
         lines = []
         for c in candidates:
             lines.append(
-                f"[rank {c.get('rank')}] {c.get('name')} "
+                f"{c.get('name')} "
                 f"(service={c.get('service')}, metric={c.get('metric')}, "
-                f"shap={c.get('shap')}, direction={c.get('direction')}))"
+                f"shap={c.get('shap')}, "
+                f"direction={c.get('direction')}))"
             )
         return "\n".join(lines)
 
@@ -156,7 +157,6 @@ class RAGDiagnosticLayer:
             timestamp=xai_report.get("timestamp", "unknown"),
             detection_result=xai_report.get("detection_result", "unknown"),
             model_score=xai_report.get("model_score", 0.0),
-            root_cause_chain=" → ".join(xai.get("root_cause_chain", [])),
             fidelity=xai.get("fidelity_assessment", "N/A"),
             stability=xai.get("stability_assessment", "N/A"),
             xai_gateway_suggestion=xai_report.get("xai_gateway_suggestion", "N/A"),
@@ -222,6 +222,7 @@ class RAGDiagnosticLayer:
 
         # 解析result
         result["root_cause"] = result.get("root_cause_ranking", [])[0]["name"] if result["root_cause_ranking"] else None
+        result["deviated_from_top_shap"] = (result["root_cause"] != xai_report["l2_candidates"][0]["name"])
         result["source_xai_report"] = xai_report
         max_chars = self.config["max_context_chars"]
         # retrieved_context 存的是截断后的纯文本,既用于打印/调试,也是
@@ -447,8 +448,9 @@ if __name__ == "__main__":
     print_limit = None
 
     # l2_path = "D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
-    # l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\checkoutservice_disk_3.json"
-    l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
+    l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\CPU\\checkoutservice_cpu_2.json"
+    # l2_path = ("D:\\projects\\X-RAG\\src\\rag_llm\\test\\CPU")
+    # l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
     output = "output"
 
     config = load_l3_config()

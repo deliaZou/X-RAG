@@ -6,11 +6,11 @@ import html2text
 from tqdm import tqdm
 
 # 保存路径
-OUTPUT_DIR = "D:\projects\X-RAG\data\KnowledgeBase_raw\google_sre_book"
+OUTPUT_DIR = "D:\projects\X-RAG\data\KnowledgeBase_raw\google_sre_workbook"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 BASE_URL = "https://sre.google"
-TOC_URL = "https://sre.google/sre-book/table-of-contents/"
+TOC_URL = "https://sre.google/workbook/table-of-contents/"
 
 # 配置 HTML 转 Markdown 工具
 h = html2text.HTML2Text()
@@ -27,7 +27,7 @@ soup = BeautifulSoup(resp.text, 'html.parser')
 links = []
 for a in soup.find_all('a', href=True):
     href = a['href']
-    if href.startswith('/sre-book/') and href != '/sre-book/' and href != '/sre-book/table-of-contents/':
+    if href.startswith('/workbook/') and href != '/workbook/' and href != '/workbook/table-of-contents/':
         if href not in links:
             links.append(href)
 

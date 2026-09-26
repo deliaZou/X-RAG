@@ -40,6 +40,7 @@ Layer2 json 结构参考 (旧格式,仍然兼容):
 from typing import Dict, List, Tuple
 import json
 import os
+import random
 
 
 def _fidelity_str(fidelity: float) -> str:
@@ -97,7 +98,6 @@ def _ranked_candidates(pairs: List[Tuple[float, str]], top_k: int,
     for i, (shap, name) in enumerate(pairs[:top_k], 1):
         service, metric_type = _split_name(name)
         out.append({
-            "rank": i,
             "name": name,
             "service": service,
             "metric": metric_type,
@@ -175,7 +175,7 @@ def convert_l2_to_xai_report(l2_output: Dict, candidate_pool_size: int = 10,
         "xai_gateway_suggestion": _xai_gateway_suggestion(fidelity, n_points),
         # L2 的候选排序,供 L3 重排,是 AC@k/Avg@k 评估的对比基准
         "l2_candidates": l2_candidates,
-        "ground_truth_meta": {
+    "ground_truth_meta": {
             "service": ground_truth.get("service", ""),
             "metric": ground_truth.get("metric", ""),  # 完整名称如 "checkoutservice_cpu"
             "fault": ground_truth.get("fault", ""),

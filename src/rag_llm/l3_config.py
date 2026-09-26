@@ -13,7 +13,7 @@ from pathlib import Path
 
 import yaml
 
-CONFIG_PATH = Path(__file__).resolve().parent / "configs" / "l3_config.yaml"
+CONFIG_PATH = Path(__file__).resolve().parent / "l3_config.yaml"
 
 _DEFAULTS = {
     "max_context_chars": 400,
@@ -22,6 +22,7 @@ _DEFAULTS = {
     "top_k_each": 2,
     "candidate_pool_size": 10,
     "query_chain_size": 5,
+    "prompt": "diagnosis_prompt.txt"
 }
 
 

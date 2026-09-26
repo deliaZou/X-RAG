@@ -245,7 +245,7 @@ def main():
 
     all_records = []
     all_records.extend(process_source(source_configs))
-    # timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
     output = f"{source_configs['output_dir']}{source_configs['run_tag']}_{timestamp}.json"
 
     Path(output).parent.mkdir(parents=True, exist_ok=True)
