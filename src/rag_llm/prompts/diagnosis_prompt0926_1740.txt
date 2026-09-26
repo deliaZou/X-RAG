@@ -15,7 +15,11 @@ Model score : $model_score  (higher = more anomalous)
 Fidelity    : $fidelity
 
 ---
-## L2 Candidate Root Causes (SHAP magnitude shown, order randomized — NOT a ranking)
+## L2 Candidate Root Causes
+The candidates display order does not indicate priority.
+SHAP values are supporting attribution evidence only. Do not rank candidates by SHAP value
+or assume the highest-SHAP candidate is the root cause.
+
 $l2_candidates
 
 ---
@@ -53,16 +57,37 @@ Use these as **hypothesis tests for EACH candidate**, not just to confirm the to
 - A latency anomaly in a leaf service → anomaly is self-contained, not propagated
 - Use the Service Topology to determine propagation direction
 
+## Root Cause Scope — Hard Constraint
+
+The root cause must be a fault-indicator metric from the L2 candidate list. For this benchmark, eligible root-cause metrics are:
+- `cpu` for CPU faults
+- `mem` for memory faults
+- `diskio` for disk faults
+- `latency` for delay or loss faults
+- `socket` for socket faults
+
+Metrics outside this list are contextual evidence only. In particular, `workload` describes request/load volume and MUST NOT be selected or ranked as a root cause. `error` may support a loss hypothesis, but is not itself the root-cause metric under this benchmark's labeling. Do not promote either metric above an eligible fault-indicator candidate.
+
+Only rank eligible candidates that actually appear in the L2 candidate list. If the list contains no eligible candidate, return an empty `root_cause_ranking` and explain that the supplied candidates do not contain a valid root-cause metric; do not invent or substitute a metric.
+
 ---
 
 ## Task
 
-Using the Shapley values (L2 candidates), known fault patterns, and service topology above,
-identify the most likely root cause from the L2 candidates.
+Evaluate every candidate independently using:
+(a) whether its metric matches a known fault pattern,
+(b) whether retrieved playbook evidence supports it,
+(c) whether the service's topology position supports a plausible propagation path.
 
+First choose the most likely candidate based on fault-pattern, playbook, and topology
+evidence. Use SHAP only as secondary evidence to break a tie or adjust confidence.
+If the evidence does not distinguish candidates, preserve that uncertainty.
 
-Then select the single most likely root cause — it does NOT have to be the highest-SHAP candidate if the evidence points elsewhere.
+Return a ranking containing only eligible root-cause candidates from the list above. Apply the Root Cause Scope constraint before comparing playbook or topology evidence.
 
+Rank the top 5 eligible root-cause candidates from most to least likely.
+Return up to 5 candidates. If fewer than 5 eligible candidates are available,
+rank all of them. Do not invent candidates.
 ---
 
 ## Output Format
@@ -71,13 +96,15 @@ Then select the single most likely root cause — it does NOT have to be the hig
   "root_cause_ranking": [
     {"rank": 1, "name": "<service_metric>"},
     {"rank": 2, "name": "<service_metric>"},
-    {...}
+    {"rank": 3, "name": "<service_metric>"},
+    {"rank": 4, "name": "<service_metric>"},
+    {"rank": 5, "name": "<service_metric>"}
   ],
   "root_cause_explanation": "<2-3 sentences explaining your reasoning>",
   "playbook_support": "<enum>",
 }
 
 **IMPORTANT:**
-- All candidates MUST come from the L2 candidates list.
+- All ranked candidates MUST come from the eligible root-cause metrics in the L2 candidates list.
 - playbook_support: use "strong" if the playbook explicitly describes this fault type; "weak" if only loosely related; "none" if no relevant playbook was retrieved.
 - Output JSON only.

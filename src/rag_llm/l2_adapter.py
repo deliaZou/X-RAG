@@ -94,6 +94,10 @@ def _ranked_candidates(pairs: List[Tuple[float, str]], top_k: int,
     对 AC@K_train 做 K=5/8/10/15/20 的 sweep,取边际收益开始趋平的点。
     """
     directions = directions or {}
+    # # top_k 的选择仍然基于 shap 数值大小（这一步不能打乱，否则会漏掉真正高 shap 的候选）
+    # top_pairs = list(pairs[:top_k])
+    # # 只打乱这 top_k 个候选“展示给 LLM 时”的顺序
+    # random.shuffle(top_pairs)
     out = []
     for i, (shap, name) in enumerate(pairs[:top_k], 1):
         service, metric_type = _split_name(name)
