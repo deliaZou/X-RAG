@@ -33,7 +33,7 @@ FAULT_TYPES = {
     "Disk":   {"metrics": ["diskio"],
                "pattern": "target service 的 diskio 指标异常,可能伴随 latency 上升"},
     "Loss":   {"metrics": ["latency"],
-               "pattern": "网络丢包导致失败请求和错误响应码上升,root cause indicator是error指标,"
+               "pattern": "网络丢包导致失败请求和错误响应码上升,root cause indicator是latency指标,"
                           "不是socket(RCAEval论文3.2节原文定义,之前误把socket也算进Loss,已修正)"},
     "Mem":    {"metrics": ["mem"],
                "pattern": "target service 的 mem 指标持续升高,可能伴随 diskio (swap) 上升"},
