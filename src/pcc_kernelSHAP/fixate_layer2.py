@@ -201,13 +201,6 @@ def process_case(cid, row, features, cfg):
             "trend": evidence["trend"],
         })
 
-    # 两种排名独立计算：SHAP 排名和 z-score 排名
-    shap_order = sorted(
-        range(len(metrics_list)),
-        key=lambda j: metrics_list[j]["shap"],
-        reverse=True,
-    )
-
     # 保持 metrics_list 主顺序为 SHAP 排名，便于兼容现有 adapter
     metrics_list.sort(key=lambda m: m["shap"], reverse=True)
 
