@@ -14,10 +14,10 @@ root_cause_explanation / source_xai_report 这些字段已经够用),评估阶�
 
 用法:
     # 对着 run_pipeline() 存的报告文件单独跑评估
-    python ragas_eval.py --path output/20260101_120000_reports.json
+    python ragas_eval.py --path output_his_0927/20260101_120000_reports.json
 
     # 只跑其中某几个指标 (省调用次数)
-    python ragas_eval.py --path output/xxx_reports.json --metrics faithfulness,answer_relevance
+    python ragas_eval.py --path output_his_0927/xxx_reports.json --metrics faithfulness,answer_relevance
 """
 
 import argparse
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     # parser.add_argument("--metrics", default=None,
     #                      help="逗号分隔,取值来自 faithfulness,answer_relevance,answer_correctness;"
     #                           "不传则三个都跑")
-    # parser.add_argument("--output", default=None,
+    # parser.add_argument("--output_his_0927", default=None,
     #                      help="评估结果保存路径,默认在报告同目录下把 _reports.json 换成 _ragas.json")
     # args = parser.parse_args()
 
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     # records = build_eval_records(reports)
     # result = run_ragas(records, metrics=metrics)
 
-    l3_path = "D:\\projects\\X-RAG\\src\\rag_llm\output\\20260923_180802_reports.json"
+    l3_path = "/src/rag_llm/output_his_0927\\20260923_180802_reports.json"
     metrics = ["context_precision"]  # 取值来自 faithfulness,answer_relevance,answer_correctness;"
     reports = load_reports(l3_path)
     records = build_eval_records(reports)

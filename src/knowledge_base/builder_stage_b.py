@@ -23,7 +23,7 @@ stage_b_dedup.py
       --intermediate cases_intermediate.json \
       --existing_kb knowledgeBase_raw/rag_knowledge_base.json \
       --cache embeddings_cache.pkl \
-      --output to_insert.json \
+      --output_his_0927 to_insert.json \
       --threshold 0.85
 """
 
@@ -210,11 +210,11 @@ def main():
     to_insert.extend(reclaimed)
 
     # timestamp = datetime.now().strftime("%Y%m%d_%H%M")
-    # output = f"{source_configs['output_dir']}{source_configs['run_tag']}_{timestamp}.json"
-    # with open(output, "w", encoding="utf-8") as f:
+    # output_his_0927 = f"{source_configs['output_dir']}{source_configs['run_tag']}_{timestamp}.json"
+    # with open(output_his_0927, "w", encoding="utf-8") as f:
     #     json.dump(to_insert, f, ensure_ascii=False, indent=2)
 
-    # dupe_log_path = output.replace(".json", "_skipped_duplicates.json")
+    # dupe_log_path = output_his_0927.replace(".json", "_skipped_duplicates.json")
     # with open(dupe_log_path, "w", encoding="utf-8") as f:
     #     json.dump(remaining_dupes, f, ensure_ascii=False, indent=2)
 

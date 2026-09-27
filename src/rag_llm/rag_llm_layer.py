@@ -33,7 +33,7 @@ Layer 3 — RAG-LLM 诊断推理层
       算 accuracy -> 存 accuracy) 合并成一个 run_pipeline() 函数,
       --mode 拆成 --input {builtin,l2-json,l2-dir} + --ragas 两个正交参数;
       l2-json 现在直接复用 l2-dir 同一条代码路径 (n=1 的批量),不再单独
-      写一套。同时把之前硬编码的 Windows 路径分隔符 (output\\...) 换成
+      写一套。同时把之前硬编码的 Windows 路径分隔符 (output_his_0927\\...) 换成
       os.path.join,并在写文件前 os.makedirs 保证目录存在。
   13. RAGAS 评估整个拆到独立文件 ragas_eval.py,RAGDiagnosticLayer 不再
       持有 _eval_records 状态、也不再有 run_ragas()/diagnose_batch_with_ragas()
@@ -147,7 +147,13 @@ class RAGDiagnosticLayer:
                 f"{c.get('name')} "
                 f"(service={c.get('service')}, metric={c.get('metric')}, "
                 f"shap={c.get('shap')}, "
-                f"direction={c.get('direction')}))"
+                f"zscore_rank={c.get('zscore_rank')}, "
+                f"mean_zscore={c.get('mean_zscore')}, "
+                f"mean_abs_zscore={c.get('mean_abs_zscore')}, "
+                f"max_abs_zscore={c.get('max_abs_zscore')}, "
+                f"direction={c.get('direction')}, "
+                f"duration_samples={c.get('duration_samples')}, "
+                f"trend={c.get('trend')})"
             )
         return "\n".join(lines)
 
@@ -189,7 +195,7 @@ class RAGDiagnosticLayer:
             return json.loads(raw)
         except json.JSONDecodeError as e:
             self._call_stats["json_parse_error"] += 1
-            print(f"[-] LLM output not illegal JSON: {e}\nOriginal output's first 200 characters: {raw[:200]}")
+            print(f"[-] LLM output_his_0927 not illegal JSON: {e}\nOriginal output_his_0927's first 200 characters: {raw[:200]}")
             raise
 
     # ────────────────────────────────────────────────────
@@ -373,7 +379,7 @@ def _print_accuracy(acc: dict):
 def run_pipeline(layer3: RAGDiagnosticLayer, xai_reports: list[dict],
                   run_ragas: bool = False, ragas_metrics: list[str] = None,
                   verbose: bool = True, print_limit: int = 20,
-                  output_dir: str = "output") -> None:
+                  output_dir: str = "output_his_0927") -> None:
     os.makedirs(output_dir, exist_ok=True)
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -437,21 +443,22 @@ if __name__ == "__main__":
                          help="关闭逐条打印诊断报告 (默认打印)")
     parser.add_argument("--print-limit", type=int, default=20,
                          help="verbose 模式下最多打印多少条,避免样本多时刷屏")
-    parser.add_argument("--output-dir", default="output",
+    parser.add_argument("--output_his_0927-dir", default="output_his_0927",
                          help="报告/accuracy/ragas 结果的保存目录")
     args = parser.parse_args()
 
     # l2_path = args.path
-    # output = args.output_dir
+    # output_his_0927 = args.output_dir
     ragas = None
     verbose = None
     print_limit = None
 
-    # l2_path = "D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
+    l2_base_path = "D:\\projects\\X-RAG\\src\\pcc_kernelSHAP\\layer2_output\\"
     # l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\CPU\\checkoutservice_cpu_2.json"
     # l2_path = ("D:\\projects\\X-RAG\\src\\rag_llm\\test")
-    l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
-    output = "output"
+    # l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
+    l2_path = l2_base_path + "checkoutservice_cpu_2.json"
+    output = "output_his_0927"
 
     config = load_l3_config()
     pool_size = args.candidate_pool_size or config["candidate_pool_size"]

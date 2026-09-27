@@ -82,32 +82,30 @@ def _dedup_services(names: List[str]) -> List[str]:
     return out
 
 
-def _ranked_candidates(pairs: List[Tuple[float, str]], top_k: int,
-                        directions: Dict[str, str] = None) -> List[Dict]:
-    """
-    pairs: [(shap, name), ...] 已按 shap 降序排好序
-    -> l2_candidates: 供 L3 重排使用的候选列表, 每条 {rank, name, service, metric, shap, direction}
-
-    top_k 是候选池大小,不等于评估窗口 (AC@1/3/5)。候选池应比评估窗口宽,
-    否则真实 root cause 若排在 L2 的第 6 名以后,会在这一步被直接砍掉,
-    LLM 之后再怎么重排也救不回来。默认 10 只是起点,建议在 train-fold 上
-    对 AC@K_train 做 K=5/8/10/15/20 的 sweep,取边际收益开始趋平的点。
-    """
+def _ranked_candidates(pairs: List[Tuple[float, str]], top_k: int, directions: Dict[str, str] = None,
+    metric_details: Dict[str, Dict] = None) -> List[Dict]:
     directions = directions or {}
-    # # top_k 的选择仍然基于 shap 数值大小（这一步不能打乱，否则会漏掉真正高 shap 的候选）
-    # top_pairs = list(pairs[:top_k])
-    # # 只打乱这 top_k 个候选“展示给 LLM 时”的顺序
-    # random.shuffle(top_pairs)
+    metric_details = metric_details or {}
+
     out = []
     for i, (shap, name) in enumerate(pairs[:top_k], 1):
         service, metric_type = _split_name(name)
+        details = metric_details.get(name, {})
+
         out.append({
             "name": name,
             "service": service,
             "metric": metric_type,
             "shap": shap,
-            "direction": directions.get(name, "unknown"),
+            "direction": directions.get(name, details.get("direction", "unknown")),
+            "mean_zscore": details.get("mean_zscore"),
+            "mean_abs_zscore": details.get("mean_abs_zscore"),
+            "max_abs_zscore": details.get("max_abs_zscore"),
+            "zscore_rank": details.get("zscore_rank"),
+            "duration_samples": details.get("duration_samples"),
+            "trend": details.get("trend"),
         })
+
     return out
 
 
@@ -129,44 +127,45 @@ def convert_l2_to_xai_report(l2_output: Dict, candidate_pool_size: int = 10,
     fidelity = l2_output.get("attribution_fidelity")
     n_points = l2_output.get("n_explained_points", 0)
 
-    if _is_new_format(l2_output):
-        service_list = l2_output.get("service_list", [])
-        metrics_list = l2_output.get("metrics_list", [])
+    service_list = l2_output.get("service_list", [])
+    metrics_list = l2_output.get("metrics_list", [])
 
-        positive_metrics = [m for m in metrics_list if m.get("shap", 0) > 0]
-        sorted_metrics = sorted(positive_metrics, key=lambda x: x["shap"], reverse=True)
-        pairs = [(m["shap"], m["name"]) for m in sorted_metrics]
-        directions = {m["name"]: m.get("direction", "unknown") for m in sorted_metrics}
+    # positive_metrics = [m for m in metrics_list if m.get("shap", 0) > 0]
+    # sorted_metrics = sorted(positive_metrics, key=lambda x: x["shap"], reverse=True)
+    # pairs = [(m["shap"], m["name"]) for m in sorted_metrics]
+    # directions = {m["name"]: m.get("direction", "unknown") for m in sorted_metrics}
+    #
+    # metric_chain = [name for _, name in pairs[:query_chain_size]]
+    # service_chain = [item["service"] for item in service_list[:query_chain_size]] \
+    #     or _dedup_services(metric_chain)
+    #
+    # top_service = service_list[0] if service_list else {}
+    # model_score = top_service.get("service_shap", 0.0)
+    #
+    # metric_details = {m["name"]: m for m in sorted_metrics}
+    #
+    # l2_candidates = _ranked_candidates(pairs, candidate_pool_size, directions, metric_details)
+    all_metrics = [m for m in metrics_list if m.get("name")]
 
-        metric_chain = [name for _, name in pairs[:query_chain_size]]
-        service_chain = [item["service"] for item in service_list[:query_chain_size]] \
-            or _dedup_services(metric_chain)
+    shap_ranked = sorted(all_metrics, key=lambda m: float(m.get("shap", 0)), reverse=True,)
+    zscore_ranked = sorted(all_metrics, key=lambda m: float(m.get("mean_abs_zscore", 0)), reverse=True,)
 
-        top_service = service_list[0] if service_list else {}
-        model_score = top_service.get("service_shap", 0.0)
+    metric_details = {m["name"]: m for m in all_metrics}
+    directions = { m["name"]: m.get("direction", "unknown") for m in all_metrics}
 
-        l2_candidates = _ranked_candidates(pairs, candidate_pool_size, directions)
-    else:
-        # 旧格式: candidates -> metrics 嵌套结构
-        flat = []
-        for cand in l2_output.get("candidates", []):
-            for m in cand.get("metrics", []):
-                if m.get("shap", 0) > 0:
-                    flat.append((m["shap"], m["name"]))
-        flat.sort(key=lambda x: x[0], reverse=True)
+    metric_chain = [m["name"] for m in shap_ranked[:query_chain_size]]
+    service_chain = [item["service"] for item in service_list[:query_chain_size]] or _dedup_services(metric_chain)
 
-        metric_chain = [name for _, name in flat[:query_chain_size]]
-        service_chain = _dedup_services(metric_chain)
+    selected = {}
+    for m in (shap_ranked[:candidate_pool_size] + zscore_ranked[:candidate_pool_size]):
+        selected[m["name"]] = m
 
-        top_candidate = l2_output.get("candidates", [{}])[0]
-        model_score = top_candidate.get("service_shap", 0.0)
-
-        l2_candidates = _ranked_candidates(flat, candidate_pool_size)
+    candidate_pairs = sorted([(float(m.get("shap", 0)), name) for name, m in selected.items()], reverse=True,)
+    l2_candidates = _ranked_candidates(candidate_pairs, len(candidate_pairs), directions, metric_details)
 
     return {
         "timestamp": meta.get("case_id", "unknown"),
         "detection_result": "Anomaly",
-        "model_score": model_score,
         "xai_analysis": {
             "service_chain": service_chain,
             "metric_chain": metric_chain,
