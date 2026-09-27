@@ -31,7 +31,7 @@ from pyod.models.pca import PCA as PyodPCA
 BASE = r"D:\projects\X-RAG\RCAEval_ds\trans-OB"
 CONFIG = r"D:\projects\X-RAG\RCAEval_ds\selection.yaml"   # 可缺省
 # OUT = os.path.join(BASE, "layer2_output")
-OUT = "D:\projects\X-RAG\src\pcc_kernelSHAP\layer_output"
+OUT = "D:\projects\X-RAG\src\pcc_kernelSHAP\layer2_output"
 
 DEFAULT = {
     "pca_n_components": 0.95,
@@ -108,7 +108,45 @@ def process_case(cid, row, features, cfg):
     # 聚合: 逐点绝对值均值, 压成特征级分数
     feat_score = np.abs(sv).mean(axis=0)                 # (D,)
     # 原始偏移方向: 异常段均值相对训练段均值
-    direction = np.where(Xte[sel].mean(0) >= Xtr.mean(0), "up", "down")
+    # direction = np.where(Xte[sel].mean(0) >= Xtr.mean(0), "up", "down")
+
+    # 按异常标签时间点计算候选的时间序列证据
+    anomaly_indices = np.where(y == 1)[0]
+
+    def candidate_evidence(i):
+        mu = Xtr[:, i].mean()
+        sd = Xtr[:, i].std()
+        if sd < 1e-9:
+            sd = 1e-9
+
+        z = (Xte[:, i] - mu) / sd
+        anomaly_z = z[anomaly_indices]
+
+        # 只统计异常标签范围内 |z| >= 2 的最长连续区间
+        active = (y == 1) & (np.abs(z) >= 2)
+        longest = current = 0
+        for is_active in active:
+            current = current + 1 if is_active else 0
+            longest = max(longest, current)
+
+        # 在线性趋势计算前保留时间顺序
+        if len(anomaly_indices) >= 2:
+            slope = np.polyfit(anomaly_indices, Xte[anomaly_indices, i], 1)[0]
+            trend = "increasing" if slope > 0 else "decreasing" if slope < 0 else "stable"
+        else:
+            trend = "unknown"
+
+        mean_z = float(anomaly_z.mean()) if len(anomaly_z) else 0.0
+        return {
+            "mean_zscore": round(mean_z, 5),
+            "mean_abs_zscore": round(float(np.abs(anomaly_z).mean()), 5)
+            if len(anomaly_z) else 0.0,
+            "max_abs_zscore": round(float(np.abs(anomaly_z).max()), 5)
+            if len(anomaly_z) else 0.0,
+            "direction": "up" if mean_z > 0 else "down" if mean_z < 0 else "stable",
+            "duration_samples": int(longest),
+            "trend": trend,
+        }
 
     allowed_metrics = {"cpu", "latency", "diskio", "mem", "socket"}
     eligible_indices = [
@@ -129,14 +167,34 @@ def process_case(cid, row, features, cfg):
     ]
 
     # metrics_list 只输出允许的根因指标
-    metrics_list = [
-        {
+    metrics_list = []
+    for i in eligible_indices:
+        evidence = candidate_evidence(i)
+        metrics_list.append({
             "name": features[i],
             "shap": round(float(feat_score[i]), 5),
-            "direction": str(direction[i]),
-        }
-        for i in eligible_indices
-    ]
+            "direction": evidence["direction"],
+            "mean_zscore": evidence["mean_zscore"],
+            "mean_abs_zscore": evidence["mean_abs_zscore"],
+            "duration_samples": evidence["duration_samples"],
+            "trend": evidence["trend"],
+        })
+
+    # 两种排名独立计算：SHAP 排名和 z-score 排名
+    shap_order = sorted(
+        range(len(metrics_list)),
+        key=lambda j: metrics_list[j]["shap"],
+        reverse=True,
+    )
+    zscore_order = sorted(
+        range(len(metrics_list)),
+        key=lambda j: metrics_list[j]["mean_abs_zscore"],
+        reverse=True,
+    )
+    for rank, j in enumerate(zscore_order, 1):
+        metrics_list[j]["zscore_rank"] = rank
+
+    # 保持 metrics_list 主顺序为 SHAP 排名，便于兼容现有 adapter
     metrics_list.sort(key=lambda m: m["shap"], reverse=True)
 
     # 案例级 fidelity: 去掉 Top-K 特征后, 分数下降比例
@@ -160,7 +218,6 @@ def process_case(cid, row, features, cfg):
                 "metric": gt_metric,
             },
         },
-        "inject_relative": True,
         "n_explained_points": int(len(sel)),
         "attribution_fidelity": round(fidelity, 4),
         "service_list": service_list,      # ← 新格式
