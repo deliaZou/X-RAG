@@ -116,8 +116,26 @@ def process_case(cid, row, features, cfg):
     def candidate_evidence(i):
         mu = Xtr[:, i].mean()
         sd = Xtr[:, i].std()
+        anomaly_values = Xte[anomaly_indices, i]
+
         if sd < 1e-9:
-            sd = 1e-9
+            mean_delta = (
+                float(anomaly_values.mean() - mu)
+                if len(anomaly_values) else 0.0
+            )
+            return {
+                "zscore_valid": False,
+                "mean_zscore": None,
+                "mean_abs_zscore": None,
+                "max_abs_zscore": None,
+                "direction": (
+                    "up" if mean_delta > 0
+                    else "down" if mean_delta < 0
+                    else "stable"
+                ),
+                "duration_samples": None,
+                "trend": "unknown",
+            }
 
         z = (Xte[:, i] - mu) / sd
         anomaly_z = z[anomaly_indices]
@@ -138,6 +156,7 @@ def process_case(cid, row, features, cfg):
 
         mean_z = float(anomaly_z.mean()) if len(anomaly_z) else 0.0
         return {
+            "zscore_valid": True,
             "mean_zscore": round(mean_z, 5),
             "mean_abs_zscore": round(float(np.abs(anomaly_z).mean()), 5)
             if len(anomaly_z) else 0.0,
@@ -173,9 +192,11 @@ def process_case(cid, row, features, cfg):
         metrics_list.append({
             "name": features[i],
             "shap": round(float(feat_score[i]), 5),
+            "zscore_valid": evidence["zscore_valid"],
             "direction": evidence["direction"],
             "mean_zscore": evidence["mean_zscore"],
             "mean_abs_zscore": evidence["mean_abs_zscore"],
+            "max_abs_zscore": evidence["max_abs_zscore"],
             "duration_samples": evidence["duration_samples"],
             "trend": evidence["trend"],
         })
@@ -186,13 +207,6 @@ def process_case(cid, row, features, cfg):
         key=lambda j: metrics_list[j]["shap"],
         reverse=True,
     )
-    zscore_order = sorted(
-        range(len(metrics_list)),
-        key=lambda j: metrics_list[j]["mean_abs_zscore"],
-        reverse=True,
-    )
-    for rank, j in enumerate(zscore_order, 1):
-        metrics_list[j]["zscore_rank"] = rank
 
     # 保持 metrics_list 主顺序为 SHAP 排名，便于兼容现有 adapter
     metrics_list.sort(key=lambda m: m["shap"], reverse=True)

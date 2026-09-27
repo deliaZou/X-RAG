@@ -1,0 +1,109 @@
+## Anomaly Report
+
+## Pipeline Context
+- **Layer 1 (Detection)**: PCC (Principal Component Classifier) detects anomalies in multivariate time-series metrics.
+- **Layer 2 (Explanation)**: KernelSHAP explains each anomaly by computing Shapley values for all metrics.
+- **Shapley Value Definition**: Each metric's Shapley value represents its **marginal contribution** to the anomaly score. Higher values indicate the metric contributed more to the anomaly being flagged.
+- **⚠️ SHAP Limitations — READ CAREFULLY**:
+  - SHAP measures statistical correlation, NOT causation.
+  - A high-SHAP metric could be the root cause, OR a symptom/downstream effect.
+  - **Empirically, SHAP ranking is known to under-rank certain resource faults (e.g. CPU) — the true root cause is often NOT the top-ranked candidate.** Do not assume rank 1 is correct by default.
+  - The candidate list below is presented in RANDOM order, not SHAP order, specifically so you evaluate each one on its merits rather than its position.
+
+### Anomaly Details
+Fidelity    : $fidelity
+
+---
+## L2 Candidate Root Causes
+The candidates display order does not indicate priority.
+SHAP values are supporting attribution evidence only. Do not rank candidates by SHAP value
+or assume the highest-SHAP candidate is the root cause.
+
+$l2_candidates
+
+---
+## Retrieved Knowledge
+
+### [A] Ops Playbooks
+$playbooks
+
+### [B] Service Topology
+$topology_docs
+
+---
+
+## Known Fault Patterns (from microservice fault injection research)
+Use these as **hypothesis tests for EACH candidate**, not just to confirm the top SHAP one.
+
+**Resource faults (CPU / MEM / DISK / SOCKET):**
+- The fault manifests directly in the resource metric
+- Example: cpu fault → emailservice_cpu shows high SHAP
+- Other metrics (latency) may show secondary effects
+
+**Network fault (DELAY):**
+- The fault manifests directly in latency metric
+- Example: delay fault → checkoutservice_latency shows high SHAP
+- Error metric is usually unaffected
+
+**Network fault (LOSS):**
+- PRIMARY indicator: latency metric (currencyservice_latency shows high SHAP)
+  - Timeouts and retries cause latency elevation
+- SECONDARY indicator: error metric may show minor elevation
+  - Some requests may fail completely
+
+**Propagation pattern:**
+- A resource fault (CPU/MEM) in an upstream service → downstream services show latency elevation
+- A latency anomaly in a leaf service → anomaly is self-contained, not propagated
+- Use the Service Topology to determine propagation direction
+
+## Root Cause Scope — Hard Constraint
+
+The root cause must be a fault-indicator metric from the L2 candidate list. For this benchmark, eligible root-cause metrics are:
+- `cpu` for CPU faults
+- `mem` for memory faults
+- `diskio` for disk faults
+- `latency` for delay or loss faults
+- `socket` for socket faults
+
+Metrics outside this list are contextual evidence only. In particular, `workload` describes request/load volume and MUST NOT be selected or ranked as a root cause. `error` may support a loss hypothesis, but is not itself the root-cause metric under this benchmark's labeling. Do not promote either metric above an eligible fault-indicator candidate.
+
+Only rank eligible candidates that actually appear in the L2 candidate list. If the list contains no eligible candidate, return an empty `root_cause_ranking` and explain that the supplied candidates do not contain a valid root-cause metric; do not invent or substitute a metric.
+
+---
+
+## Task
+
+Evaluate every candidate independently using:
+(a) whether its metric matches a known fault pattern,
+(b) whether retrieved playbook evidence supports it,
+(c) whether the service's topology position supports a plausible propagation path.
+
+First choose the most likely candidate based on fault-pattern, playbook, and topology
+evidence. Use SHAP only as secondary evidence to break a tie or adjust confidence.
+If the evidence does not distinguish candidates, preserve that uncertainty.
+
+Return a ranking containing only eligible root-cause candidates from the list above. Apply the Root Cause Scope constraint before comparing playbook or topology evidence.
+
+Rank the top 5 eligible root-cause candidates from most to least likely.
+Return up to 5 candidates. If fewer than 5 eligible candidates are available,
+rank all of them. Do not invent candidates.
+---
+
+## Output Format
+
+{
+  "root_cause_ranking": [
+    {"rank": 1, "name": "<service_metric>"},
+    {"rank": 2, "name": "<service_metric>"},
+    {"rank": 3, "name": "<service_metric>"},
+    {"rank": 4, "name": "<service_metric>"},
+    {"rank": 5, "name": "<service_metric>"}
+  ],
+  "root_cause_explanation": "<2-3 sentences explaining your reasoning>",
+  "playbook_support": "<enum>",
+}
+
+**IMPORTANT:**
+- All ranked candidates MUST come from the eligible root-cause metrics in the L2 candidates list.
+- playbook_support: use "strong" if the playbook explicitly describes this fault type; "weak" if only loosely related; "none" if no relevant playbook was retrieved.
+- Output JSON only.
