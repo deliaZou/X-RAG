@@ -8,429 +8,404 @@
    "metric": "recommendationservice_latency"
   }
  },
- "inject_relative": true,
  "n_explained_points": 15,
- "attribution_fidelity": 0.9998,
+ "attribution_fidelity": 0.9999,
  "service_list": [
   {
    "service": "recommendationservice",
-   "service_shap": 187288562.68973
-  },
-  {
-   "service": "adservice",
-   "service_shap": 32125.99642
+   "service_shap": 187279464.9569
   },
   {
    "service": "frontend",
-   "service_shap": 28578.82928
-  },
-  {
-   "service": "productcatalogservice",
-   "service_shap": 22999.98872
-  },
-  {
-   "service": "cartservice",
-   "service_shap": 21790.63545
-  },
-  {
-   "service": "shippingservice",
-   "service_shap": 21731.72666
-  },
-  {
-   "service": "paymentservice",
-   "service_shap": 20855.50663
-  },
-  {
-   "service": "redis",
-   "service_shap": 19028.7164
-  },
-  {
-   "service": "emailservice",
-   "service_shap": 8534.03756
+   "service_shap": 30073.15478
   },
   {
    "service": "checkoutservice",
-   "service_shap": 7164.20689
+   "service_shap": 26693.73427
+  },
+  {
+   "service": "cartservice",
+   "service_shap": 24115.03926
+  },
+  {
+   "service": "adservice",
+   "service_shap": 21280.89179
+  },
+  {
+   "service": "shippingservice",
+   "service_shap": 18772.21466
   },
   {
    "service": "currencyservice",
-   "service_shap": 6410.86841
+   "service_shap": 18722.02107
+  },
+  {
+   "service": "productcatalogservice",
+   "service_shap": 16226.96186
+  },
+  {
+   "service": "paymentservice",
+   "service_shap": 15538.06249
+  },
+  {
+   "service": "emailservice",
+   "service_shap": 12197.41513
+  },
+  {
+   "service": "redis",
+   "service_shap": 10779.15072
   }
  ],
  "metrics_list": [
   {
    "name": "recommendationservice_diskio",
-   "shap": 182752049.50817,
+   "shap": 182744956.38183,
    "direction": "up",
    "mean_zscore": 6999812603904.0,
    "mean_abs_zscore": 6999812603904.0,
-   "max_abs_zscore": 123806072963072.0,
    "duration_samples": 44,
    "trend": "decreasing",
    "zscore_rank": 1
   },
   {
    "name": "recommendationservice_latency",
-   "shap": 4523867.36929,
+   "shap": 4531137.82932,
    "direction": "up",
    "mean_zscore": 8303.05371,
    "mean_abs_zscore": 8303.05371,
-   "max_abs_zscore": 8674.18262,
    "duration_samples": 596,
    "trend": "increasing",
    "zscore_rank": 3
   },
   {
-   "name": "frontend_mem",
-   "shap": 15456.33898,
+   "name": "checkoutservice_latency",
+   "shap": 19938.82669,
    "direction": "up",
-   "mean_zscore": 1.50191,
-   "mean_abs_zscore": 1.64245,
-   "max_abs_zscore": 5.44828,
-   "duration_samples": 31,
-   "trend": "increasing",
-   "zscore_rank": 9
-  },
-  {
-   "name": "adservice_cpu",
-   "shap": 14262.99915,
-   "direction": "down",
-   "mean_zscore": -0.00066,
-   "mean_abs_zscore": 1.16094,
-   "max_abs_zscore": 7.45873,
-   "duration_samples": 41,
+   "mean_zscore": 0.93425,
+   "mean_abs_zscore": 1.60236,
+   "duration_samples": 45,
    "trend": "decreasing",
-   "zscore_rank": 14
-  },
-  {
-   "name": "cartservice_mem",
-   "shap": 12999.53141,
-   "direction": "down",
-   "mean_zscore": -0.44486,
-   "mean_abs_zscore": 0.84136,
-   "max_abs_zscore": 1.96513,
-   "duration_samples": 0,
-   "trend": "increasing",
-   "zscore_rank": 23
-  },
-  {
-   "name": "paymentservice_latency",
-   "shap": 12787.95962,
-   "direction": "down",
-   "mean_zscore": -0.29106,
-   "mean_abs_zscore": 1.18865,
-   "max_abs_zscore": 2.56756,
-   "duration_samples": 42,
-   "trend": "decreasing",
-   "zscore_rank": 13
-  },
-  {
-   "name": "redis_diskio",
-   "shap": 10631.99932,
-   "direction": "down",
-   "mean_zscore": -0.15517,
-   "mean_abs_zscore": 0.69525,
-   "max_abs_zscore": 2.83379,
-   "duration_samples": 15,
-   "trend": "increasing",
-   "zscore_rank": 29
-  },
-  {
-   "name": "productcatalogservice_cpu",
-   "shap": 9544.8061,
-   "direction": "down",
-   "mean_zscore": -0.3396,
-   "mean_abs_zscore": 0.58573,
-   "max_abs_zscore": 4.2988,
-   "duration_samples": 12,
-   "trend": "decreasing",
-   "zscore_rank": 31
-  },
-  {
-   "name": "adservice_diskio",
-   "shap": 9209.51264,
-   "direction": "down",
-   "mean_zscore": -0.16716,
-   "mean_abs_zscore": 0.80953,
-   "max_abs_zscore": 3.27885,
-   "duration_samples": 3,
-   "trend": "decreasing",
-   "zscore_rank": 24
-  },
-  {
-   "name": "shippingservice_cpu",
-   "shap": 9018.07423,
-   "direction": "down",
-   "mean_zscore": -0.76997,
-   "mean_abs_zscore": 0.78966,
-   "max_abs_zscore": 3.84224,
-   "duration_samples": 16,
-   "trend": "increasing",
-   "zscore_rank": 26
-  },
-  {
-   "name": "productcatalogservice_mem",
-   "shap": 8772.02555,
-   "direction": "down",
-   "mean_zscore": -0.32108,
-   "mean_abs_zscore": 0.72935,
-   "max_abs_zscore": 1.94032,
-   "duration_samples": 0,
-   "trend": "increasing",
-   "zscore_rank": 28
-  },
-  {
-   "name": "redis_mem",
-   "shap": 8333.05911,
-   "direction": "up",
-   "mean_zscore": 0.00549,
-   "mean_abs_zscore": 0.28004,
-   "max_abs_zscore": 5.05276,
-   "duration_samples": 15,
-   "trend": "decreasing",
-   "zscore_rank": 36
-  },
-  {
-   "name": "shippingservice_latency",
-   "shap": 8207.20584,
-   "direction": "down",
-   "mean_zscore": -0.16998,
-   "mean_abs_zscore": 0.5025,
-   "max_abs_zscore": 1.56288,
-   "duration_samples": 0,
-   "trend": "increasing",
-   "zscore_rank": 33
-  },
-  {
-   "name": "paymentservice_cpu",
-   "shap": 8067.54701,
-   "direction": "down",
-   "mean_zscore": -0.46771,
-   "mean_abs_zscore": 0.80735,
-   "max_abs_zscore": 2.58193,
-   "duration_samples": 7,
-   "trend": "increasing",
-   "zscore_rank": 25
+   "zscore_rank": 10
   },
   {
    "name": "frontend_latency",
-   "shap": 6705.03286,
+   "shap": 17727.12008,
    "direction": "up",
    "mean_zscore": 29.34138,
    "mean_abs_zscore": 29.34533,
-   "max_abs_zscore": 36.97878,
    "duration_samples": 586,
    "trend": "increasing",
    "zscore_rank": 4
   },
   {
-   "name": "recommendationservice_mem",
-   "shap": 6631.99666,
-   "direction": "up",
-   "mean_zscore": 2.61768,
-   "mean_abs_zscore": 2.68724,
-   "max_abs_zscore": 3.94437,
-   "duration_samples": 312,
-   "trend": "increasing",
-   "zscore_rank": 7
-  },
-  {
-   "name": "adservice_latency",
-   "shap": 6555.36563,
+   "name": "cartservice_mem",
+   "shap": 13441.74392,
    "direction": "down",
-   "mean_zscore": -0.3738,
-   "mean_abs_zscore": 0.6161,
-   "max_abs_zscore": 1.22413,
+   "mean_zscore": -0.44486,
+   "mean_abs_zscore": 0.84136,
    "duration_samples": 0,
-   "trend": "decreasing",
-   "zscore_rank": 30
-  },
-  {
-   "name": "frontend_cpu",
-   "shap": 6365.41763,
-   "direction": "down",
-   "mean_zscore": -1.23576,
-   "mean_abs_zscore": 1.26834,
-   "max_abs_zscore": 7.90845,
-   "duration_samples": 14,
    "trend": "increasing",
-   "zscore_rank": 12
-  },
-  {
-   "name": "recommendationservice_cpu",
-   "shap": 6013.81562,
-   "direction": "up",
-   "mean_zscore": 0.26339,
-   "mean_abs_zscore": 0.89187,
-   "max_abs_zscore": 4.60736,
-   "duration_samples": 11,
-   "trend": "increasing",
-   "zscore_rank": 21
-  },
-  {
-   "name": "checkoutservice_mem",
-   "shap": 5029.95712,
-   "direction": "up",
-   "mean_zscore": 0.89614,
-   "mean_abs_zscore": 1.03842,
-   "max_abs_zscore": 3.21153,
-   "duration_samples": 61,
-   "trend": "decreasing",
-   "zscore_rank": 16
-  },
-  {
-   "name": "cartservice_latency",
-   "shap": 4884.50885,
-   "direction": "down",
-   "mean_zscore": -0.18999,
-   "mean_abs_zscore": 0.35763,
-   "max_abs_zscore": 2.6795,
-   "duration_samples": 14,
-   "trend": "decreasing",
-   "zscore_rank": 35
-  },
-  {
-   "name": "productcatalogservice_latency",
-   "shap": 4683.15707,
-   "direction": "up",
-   "mean_zscore": 17.31604,
-   "mean_abs_zscore": 17.31604,
-   "max_abs_zscore": 20.30297,
-   "duration_samples": 600,
-   "trend": "increasing",
-   "zscore_rank": 5
-  },
-  {
-   "name": "emailservice_cpu",
-   "shap": 4567.28106,
-   "direction": "down",
-   "mean_zscore": -0.65798,
-   "mean_abs_zscore": 0.8756,
-   "max_abs_zscore": 5.49543,
-   "duration_samples": 12,
-   "trend": "increasing",
-   "zscore_rank": 22
+   "zscore_rank": 23
   },
   {
    "name": "shippingservice_mem",
-   "shap": 4506.4466,
+   "shap": 13226.34667,
    "direction": "up",
    "mean_zscore": 0.33087,
    "mean_abs_zscore": 0.95229,
-   "max_abs_zscore": 4.07519,
    "duration_samples": 28,
    "trend": "increasing",
    "zscore_rank": 19
   },
   {
-   "name": "currencyservice_mem",
-   "shap": 4381.16527,
-   "direction": "up",
-   "mean_zscore": 0.30123,
-   "mean_abs_zscore": 0.93075,
-   "max_abs_zscore": 3.39095,
-   "duration_samples": 16,
+   "name": "adservice_latency",
+   "shap": 10453.28446,
+   "direction": "down",
+   "mean_zscore": -0.3738,
+   "mean_abs_zscore": 0.6161,
+   "duration_samples": 0,
    "trend": "decreasing",
-   "zscore_rank": 20
+   "zscore_rank": 30
   },
   {
    "name": "cartservice_cpu",
-   "shap": 3906.59519,
+   "shap": 10000.56891,
    "direction": "down",
    "mean_zscore": -0.92586,
    "mean_abs_zscore": 1.13117,
-   "max_abs_zscore": 3.97607,
    "duration_samples": 11,
    "trend": "increasing",
    "zscore_rank": 15
   },
   {
-   "name": "emailservice_latency",
-   "shap": 2395.70293,
-   "direction": "down",
-   "mean_zscore": -0.50924,
-   "mean_abs_zscore": 0.73153,
-   "max_abs_zscore": 1.68592,
-   "duration_samples": 0,
-   "trend": "decreasing",
-   "zscore_rank": 27
-  },
-  {
-   "name": "checkoutservice_cpu",
-   "shap": 2134.24976,
-   "direction": "down",
-   "mean_zscore": -0.68652,
-   "mean_abs_zscore": 1.02219,
-   "max_abs_zscore": 3.13082,
-   "duration_samples": 58,
-   "trend": "increasing",
-   "zscore_rank": 17
-  },
-  {
-   "name": "adservice_mem",
-   "shap": 2098.119,
-   "direction": "up",
-   "mean_zscore": 1.41203,
-   "mean_abs_zscore": 1.43602,
-   "max_abs_zscore": 4.40962,
-   "duration_samples": 72,
-   "trend": "increasing",
-   "zscore_rank": 11
-  },
-  {
-   "name": "emailservice_mem",
-   "shap": 1571.05357,
-   "direction": "up",
-   "mean_zscore": 3.57119,
-   "mean_abs_zscore": 3.97164,
-   "max_abs_zscore": 6.17405,
-   "duration_samples": 593,
-   "trend": "increasing",
-   "zscore_rank": 6
-  },
-  {
-   "name": "currencyservice_latency",
-   "shap": 1431.97887,
-   "direction": "down",
-   "mean_zscore": -2.09786,
-   "mean_abs_zscore": 2.10036,
-   "max_abs_zscore": 3.94188,
-   "duration_samples": 120,
-   "trend": "decreasing",
-   "zscore_rank": 8
-  },
-  {
    "name": "currencyservice_cpu",
-   "shap": 597.72427,
+   "shap": 9599.61425,
    "direction": "down",
    "mean_zscore": -0.10046,
    "mean_abs_zscore": 0.45637,
-   "max_abs_zscore": 2.8474,
    "duration_samples": 6,
    "trend": "decreasing",
    "zscore_rank": 34
   },
   {
+   "name": "adservice_mem",
+   "shap": 8981.3853,
+   "direction": "up",
+   "mean_zscore": 1.41203,
+   "mean_abs_zscore": 1.43602,
+   "duration_samples": 72,
+   "trend": "increasing",
+   "zscore_rank": 11
+  },
+  {
+   "name": "paymentservice_mem",
+   "shap": 8938.38929,
+   "direction": "up",
+   "mean_zscore": 0.45156,
+   "mean_abs_zscore": 1.01398,
+   "duration_samples": 33,
+   "trend": "decreasing",
+   "zscore_rank": 18
+  },
+  {
+   "name": "productcatalogservice_latency",
+   "shap": 8819.98064,
+   "direction": "up",
+   "mean_zscore": 17.31604,
+   "mean_abs_zscore": 17.31604,
+   "duration_samples": 600,
+   "trend": "increasing",
+   "zscore_rank": 5
+  },
+  {
+   "name": "currencyservice_latency",
+   "shap": 7066.88549,
+   "direction": "down",
+   "mean_zscore": -2.09786,
+   "mean_abs_zscore": 2.10036,
+   "duration_samples": 120,
+   "trend": "decreasing",
+   "zscore_rank": 8
+  },
+  {
+   "name": "emailservice_latency",
+   "shap": 6376.83645,
+   "direction": "down",
+   "mean_zscore": -0.50924,
+   "mean_abs_zscore": 0.73153,
+   "duration_samples": 0,
+   "trend": "decreasing",
+   "zscore_rank": 27
+  },
+  {
+   "name": "productcatalogservice_mem",
+   "shap": 5955.87048,
+   "direction": "down",
+   "mean_zscore": -0.32108,
+   "mean_abs_zscore": 0.72935,
+   "duration_samples": 0,
+   "trend": "increasing",
+   "zscore_rank": 28
+  },
+  {
+   "name": "redis_diskio",
+   "shap": 5903.44931,
+   "direction": "down",
+   "mean_zscore": -0.15517,
+   "mean_abs_zscore": 0.69525,
+   "duration_samples": 15,
+   "trend": "increasing",
+   "zscore_rank": 29
+  },
+  {
+   "name": "emailservice_cpu",
+   "shap": 5753.957,
+   "direction": "down",
+   "mean_zscore": -0.65798,
+   "mean_abs_zscore": 0.8756,
+   "duration_samples": 12,
+   "trend": "increasing",
+   "zscore_rank": 22
+  },
+  {
+   "name": "shippingservice_cpu",
+   "shap": 5544.86522,
+   "direction": "down",
+   "mean_zscore": -0.76997,
+   "mean_abs_zscore": 0.78966,
+   "duration_samples": 16,
+   "trend": "increasing",
+   "zscore_rank": 26
+  },
+  {
+   "name": "checkoutservice_cpu",
+   "shap": 5060.59793,
+   "direction": "down",
+   "mean_zscore": -0.68652,
+   "mean_abs_zscore": 1.02219,
+   "duration_samples": 58,
+   "trend": "increasing",
+   "zscore_rank": 17
+  },
+  {
+   "name": "frontend_mem",
+   "shap": 5001.67915,
+   "direction": "up",
+   "mean_zscore": 1.50191,
+   "mean_abs_zscore": 1.64245,
+   "duration_samples": 31,
+   "trend": "increasing",
+   "zscore_rank": 9
+  },
+  {
+   "name": "frontend_socket",
+   "shap": 4002.22019,
+   "direction": "up",
+   "mean_zscore": 3000000512.0,
+   "mean_abs_zscore": 3000000512.0,
+   "duration_samples": 600,
+   "trend": "increasing",
+   "zscore_rank": 2
+  },
+  {
+   "name": "redis_mem",
+   "shap": 3876.28015,
+   "direction": "up",
+   "mean_zscore": 0.00549,
+   "mean_abs_zscore": 0.28004,
+   "duration_samples": 15,
+   "trend": "decreasing",
+   "zscore_rank": 36
+  },
+  {
+   "name": "paymentservice_latency",
+   "shap": 3757.16247,
+   "direction": "down",
+   "mean_zscore": -0.29106,
+   "mean_abs_zscore": 1.18865,
+   "duration_samples": 42,
+   "trend": "decreasing",
+   "zscore_rank": 13
+  },
+  {
+   "name": "recommendationservice_mem",
+   "shap": 3370.74576,
+   "direction": "up",
+   "mean_zscore": 2.61768,
+   "mean_abs_zscore": 2.68724,
+   "duration_samples": 312,
+   "trend": "increasing",
+   "zscore_rank": 7
+  },
+  {
+   "name": "frontend_cpu",
+   "shap": 3342.13536,
+   "direction": "down",
+   "mean_zscore": -1.23576,
+   "mean_abs_zscore": 1.26834,
+   "duration_samples": 14,
+   "trend": "increasing",
+   "zscore_rank": 12
+  },
+  {
+   "name": "paymentservice_cpu",
+   "shap": 2842.51073,
+   "direction": "down",
+   "mean_zscore": -0.46771,
+   "mean_abs_zscore": 0.80735,
+   "duration_samples": 7,
+   "trend": "increasing",
+   "zscore_rank": 25
+  },
+  {
+   "name": "currencyservice_mem",
+   "shap": 2055.52132,
+   "direction": "up",
+   "mean_zscore": 0.30123,
+   "mean_abs_zscore": 0.93075,
+   "duration_samples": 16,
+   "trend": "decreasing",
+   "zscore_rank": 20
+  },
+  {
+   "name": "adservice_cpu",
+   "shap": 1846.22203,
+   "direction": "down",
+   "mean_zscore": -0.00066,
+   "mean_abs_zscore": 1.16094,
+   "duration_samples": 41,
+   "trend": "decreasing",
+   "zscore_rank": 14
+  },
+  {
+   "name": "checkoutservice_mem",
+   "shap": 1694.30965,
+   "direction": "up",
+   "mean_zscore": 0.89614,
+   "mean_abs_zscore": 1.03842,
+   "duration_samples": 61,
+   "trend": "decreasing",
+   "zscore_rank": 16
+  },
+  {
+   "name": "productcatalogservice_cpu",
+   "shap": 1451.11075,
+   "direction": "down",
+   "mean_zscore": -0.3396,
+   "mean_abs_zscore": 0.58573,
+   "duration_samples": 12,
+   "trend": "decreasing",
+   "zscore_rank": 31
+  },
+  {
    "name": "redis_cpu",
-   "shap": 63.65798,
+   "shap": 999.42126,
    "direction": "down",
    "mean_zscore": -0.18389,
    "mean_abs_zscore": 0.58287,
-   "max_abs_zscore": 5.16196,
    "duration_samples": 8,
    "trend": "increasing",
    "zscore_rank": 32
   },
   {
-   "name": "frontend_socket",
-   "shap": 52.03981,
+   "name": "cartservice_latency",
+   "shap": 672.72643,
+   "direction": "down",
+   "mean_zscore": -0.18999,
+   "mean_abs_zscore": 0.35763,
+   "duration_samples": 14,
+   "trend": "decreasing",
+   "zscore_rank": 35
+  },
+  {
+   "name": "emailservice_mem",
+   "shap": 66.62168,
    "direction": "up",
-   "mean_zscore": 3000000512.0,
-   "mean_abs_zscore": 3000000512.0,
-   "max_abs_zscore": 3000000000.0,
-   "duration_samples": 600,
+   "mean_zscore": 3.57119,
+   "mean_abs_zscore": 3.97164,
+   "duration_samples": 593,
    "trend": "increasing",
-   "zscore_rank": 2
+   "zscore_rank": 6
+  },
+  {
+   "name": "shippingservice_latency",
+   "shap": 1.00277,
+   "direction": "down",
+   "mean_zscore": -0.16998,
+   "mean_abs_zscore": 0.5025,
+   "duration_samples": 0,
+   "trend": "increasing",
+   "zscore_rank": 33
+  },
+  {
+   "name": "adservice_diskio",
+   "shap": 0.0,
+   "direction": "down",
+   "mean_zscore": -0.16716,
+   "mean_abs_zscore": 0.80953,
+   "duration_samples": 3,
+   "trend": "decreasing",
+   "zscore_rank": 24
   },
   {
    "name": "adservice_socket",
@@ -438,7 +413,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 37
@@ -449,7 +423,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 38
@@ -460,7 +433,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 39
@@ -471,7 +443,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 40
@@ -482,21 +453,9 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 41
-  },
-  {
-   "name": "checkoutservice_latency",
-   "shap": 0.0,
-   "direction": "up",
-   "mean_zscore": 0.93425,
-   "mean_abs_zscore": 1.60236,
-   "max_abs_zscore": 19.30753,
-   "duration_samples": 45,
-   "trend": "decreasing",
-   "zscore_rank": 10
   },
   {
    "name": "currencyservice_diskio",
@@ -504,7 +463,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 42
@@ -515,7 +473,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 43
@@ -526,7 +483,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 44
@@ -537,7 +493,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "decreasing",
    "zscore_rank": 45
@@ -548,21 +503,9 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 46
-  },
-  {
-   "name": "paymentservice_mem",
-   "shap": 0.0,
-   "direction": "up",
-   "mean_zscore": 0.45156,
-   "mean_abs_zscore": 1.01398,
-   "max_abs_zscore": 3.77764,
-   "duration_samples": 33,
-   "trend": "decreasing",
-   "zscore_rank": 18
   },
   {
    "name": "paymentservice_diskio",
@@ -570,7 +513,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 47
@@ -581,7 +523,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "decreasing",
    "zscore_rank": 48
@@ -592,7 +533,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "stable",
    "zscore_rank": 49
@@ -603,10 +543,19 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "decreasing",
    "zscore_rank": 50
+  },
+  {
+   "name": "recommendationservice_cpu",
+   "shap": 0.0,
+   "direction": "up",
+   "mean_zscore": 0.26339,
+   "mean_abs_zscore": 0.89187,
+   "duration_samples": 11,
+   "trend": "increasing",
+   "zscore_rank": 21
   },
   {
    "name": "recommendationservice_socket",
@@ -614,7 +563,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 51
@@ -625,7 +573,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 52
@@ -636,7 +583,6 @@
    "direction": "stable",
    "mean_zscore": 0.0,
    "mean_abs_zscore": 0.0,
-   "max_abs_zscore": 0.0,
    "duration_samples": 0,
    "trend": "increasing",
    "zscore_rank": 53
