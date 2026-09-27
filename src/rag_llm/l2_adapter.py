@@ -98,10 +98,10 @@ def _ranked_candidates(pairs: List[Tuple[float, str]], top_k: int, directions: D
             "metric": metric_type,
             "shap": shap,
             "direction": directions.get(name, details.get("direction", "unknown")),
+            "zscore_valid": details.get("zscore_valid", False),
             "mean_zscore": details.get("mean_zscore"),
             "mean_abs_zscore": details.get("mean_abs_zscore"),
             "max_abs_zscore": details.get("max_abs_zscore"),
-            "zscore_rank": details.get("zscore_rank"),
             "duration_samples": details.get("duration_samples"),
             "trend": details.get("trend"),
         })
@@ -148,43 +148,30 @@ def convert_l2_to_xai_report(l2_output: Dict, candidate_pool_size: int = 10,
     all_metrics = [m for m in metrics_list if m.get("name")]
 
     shap_ranked = sorted(all_metrics, key=lambda m: float(m.get("shap", 0)), reverse=True,)
-    zscore_ranked = sorted(all_metrics, key=lambda m: float(m.get("mean_abs_zscore", 0)), reverse=True,)
 
     metric_details = {m["name"]: m for m in all_metrics}
-    directions = { m["name"]: m.get("direction", "unknown") for m in all_metrics}
+    directions = {m["name"]: m.get("direction", "unknown") for m in all_metrics }
 
     metric_chain = [m["name"] for m in shap_ranked[:query_chain_size]]
-    service_chain = [item["service"] for item in service_list[:query_chain_size]] or _dedup_services(metric_chain)
+    service_chain = ([item["service"] for item in service_list[:query_chain_size]] or _dedup_services(metric_chain))
 
-    selected = {}
-    for m in (shap_ranked[:candidate_pool_size] + zscore_ranked[:candidate_pool_size]):
-        selected[m["name"]] = m
-
-    candidate_pairs = sorted([(float(m.get("shap", 0)), name) for name, m in selected.items()], reverse=True,)
+    candidate_pairs = [ (float(m.get("shap", 0)), m["name"]) for m in shap_ranked]
     l2_candidates = _ranked_candidates(candidate_pairs, len(candidate_pairs), directions, metric_details)
 
     return {
-        "timestamp": meta.get("case_id", "unknown"),
-        "detection_result": "Anomaly",
+        "timestamp": meta.get("case_id", "unknown"),  # diagnose_batch 当前用它显示进度
+        "case_id": meta.get("case_id", "unknown"),
         "xai_analysis": {
-            "service_chain": service_chain,
-            "metric_chain": metric_chain,
-            # 与 metric_chain 同源,专供 prompt 里 "Root cause chain" 那一行使用,
-            # 避免像之前那样 prompt 读的 key 和这里产出的 key 对不上导致永远为空
-            "root_cause_chain": metric_chain,
-            "fidelity_assessment": _fidelity_str(fidelity),
-            "stability_assessment": "N/A (未接入 stability 指标)",
+            "metric_chain": metric_chain,  # 检索使用
+            "fidelity_assessment": _fidelity_str(fidelity),  # prompt 使用
         },
-        "xai_gateway_suggestion": _xai_gateway_suggestion(fidelity, n_points),
-        # L2 的候选排序,供 L3 重排,是 AC@k/Avg@k 评估的对比基准
-        "l2_candidates": l2_candidates,
-    "ground_truth_meta": {
+        "l2_candidates": l2_candidates,  # prompt 中的候选证据
+        "ground_truth_meta": {
             "service": ground_truth.get("service", ""),
-            "metric": ground_truth.get("metric", ""),  # 完整名称如 "checkoutservice_cpu"
+            "metric": ground_truth.get("metric", ""),
             "fault": ground_truth.get("fault", ""),
         },
-        "case_id": meta.get("case_id"),
-        # 保留一些元数据供调试
+        # 保留作结果分析和调试元数据
         "n_explained_points": n_points,
         "attribution_fidelity": fidelity,
     }

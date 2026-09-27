@@ -147,7 +147,7 @@ class RAGDiagnosticLayer:
                 f"{c.get('name')} "
                 f"(service={c.get('service')}, metric={c.get('metric')}, "
                 f"shap={c.get('shap')}, "
-                f"zscore_rank={c.get('zscore_rank')}, "
+                f"zscore_valid={c.get('zscore_valid')}, "
                 f"mean_zscore={c.get('mean_zscore')}, "
                 f"mean_abs_zscore={c.get('mean_abs_zscore')}, "
                 f"max_abs_zscore={c.get('max_abs_zscore')}, "
@@ -164,7 +164,6 @@ class RAGDiagnosticLayer:
             detection_result=xai_report.get("detection_result", "unknown"),
             model_score=xai_report.get("model_score", 0.0),
             fidelity=xai.get("fidelity_assessment", "N/A"),
-            stability=xai.get("stability_assessment", "N/A"),
             xai_gateway_suggestion=xai_report.get("xai_gateway_suggestion", "N/A"),
             l2_candidates=self._format_l2_candidates(xai_report.get("l2_candidates", [])),
             playbooks=self._format_block(context.get("playbooks", [])),
