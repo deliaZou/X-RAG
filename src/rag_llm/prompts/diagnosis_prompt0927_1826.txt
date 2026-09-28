@@ -8,16 +8,23 @@
   - SHAP measures statistical correlation, NOT causation.
   - A high-SHAP metric could be the root cause, OR a symptom/downstream effect.
   - **Empirically, SHAP ranking is known to under-rank certain resource faults (e.g. CPU) — the true root cause is often NOT the top-ranked candidate.** Do not assume rank 1 is correct by default.
-  - The candidate list below is presented in RANDOM order, not SHAP order, specifically so you evaluate each one on its merits rather than its position.
+  - Candidates are listed in descending SHAP order. The list order is not a prior probability of being the root cause. Evaluate every candidate using all available evidence before ranking.
+  - Fidelity measures how faithfully the L2 attribution represents the anomaly score. It is not a measure of root-cause certainty.
 
 ### Anomaly Details
 Fidelity    : $fidelity
 
 ---
 ## L2 Candidate Root Causes
-The candidates display order does not indicate priority.
-SHAP values are supporting attribution evidence only. Do not rank candidates by SHAP value
-or assume the highest-SHAP candidate is the root cause.
+- zscore_valid indicates whether z-score statistics are usable.
+- If zscore_valid is false, ignore all z-score fields for that candidate.
+- mean_zscore is signed: positive means above baseline; negative means below.
+- mean_abs_zscore measures average deviation; max_abs_zscore is a peak and
+  should be treated as supplementary evidence.
+- duration_samples is a count of samples, not elapsed time.
+- direction describes above/below baseline; trend describes change over time.
+  For example, direction=up and trend=decreasing means the metric remains
+  above baseline but is falling.
 
 $l2_candidates
 

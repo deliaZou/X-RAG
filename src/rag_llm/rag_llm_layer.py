@@ -297,12 +297,10 @@ class RAGDiagnosticLayer:
             for k in k_list:
                 row[f"AC@{k}_coarse"] = int(any(coarse_hits[:k]))
                 row[f"AC@{k}_fine"] = int(any(fine_hits[:k]))
-            row[f"Avg@{max_k}_coarse"] = sum(
-                1 for j in range(max_k) if any(coarse_hits[:j + 1])
-            ) / max_k
-            row[f"Avg@{max_k}_fine"] = sum(
-                1 for j in range(max_k) if any(fine_hits[:j + 1])
-            ) / max_k
+            row[f"Avg@{3}_coarse"] = sum(1 for j in range(3) if any(coarse_hits[:j + 1])) / 3
+            row[f"Avg@{3}_fine"] = sum(1 for j in range(3) if any(fine_hits[:j + 1])) / 3
+            row[f"Avg@{max_k}_coarse"] = sum(1 for j in range(max_k) if any(coarse_hits[:j + 1])) / max_k
+            row[f"Avg@{max_k}_fine"] = sum(1 for j in range(max_k) if any(fine_hits[:j + 1])) / max_k
             per_case.append(row)
 
         if not per_case:
@@ -362,7 +360,13 @@ def _print_accuracy(acc: dict):
         n = sum(1 for r in acc.get("per_case", []) if r["fault_type"] == fault_type)
         print(f"\n  [{fault_type}]  (n={n})")
         print(f"    coarse (service 命中)      : {coarse}")
+        coarse_str = "\t".join(str(val) for val in coarse.values())
+        print(coarse_str)
         print(f"    fine   (service+metric 命中): {fine}")
+        fine_str = "\t".join(str(val) for val in fine.values())
+        print(fine_str)
+
+
 
     overall = {k: round(v, 4) for k, v in acc.get("overall_macro", {}).items()}
     print(f"\n  整体 macro-average (跨 fault_type 取均值,不 pool):")
@@ -452,12 +456,14 @@ if __name__ == "__main__":
     verbose = None
     print_limit = None
 
-    l2_base_path = "D:\\projects\\X-RAG\\src\\pcc_kernelSHAP\\layer2_output\\"
-    # l2_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\CPU\\checkoutservice_cpu_2.json"
+    # l2_base_path = "D:\\projects\\X-RAG\\src\\pcc_kernelSHAP\\layer2_output\\"
+    # l2_path = l2_base_path + "checkoutservice_cpu_2.json"
+    l2_base_path = "D:\\projects\\X-RAG\\src\\rag_llm\\test\\delay"
+    l2_path = l2_base_path
+    # l2_path = l2_base_path + "checkoutservice_cpu_2.json"
     # l2_path = ("D:\\projects\\X-RAG\\src\\rag_llm\\test")
     # l2_path ="D:\\projects\\X-RAG\\RCAEval_ds\\trans-OB\\layer2_output"
-    l2_path = l2_base_path + "checkoutservice_cpu_2.json"
-    output = "output_his_0927"
+    output = "output"
 
     config = load_l3_config()
     pool_size = args.candidate_pool_size or config["candidate_pool_size"]

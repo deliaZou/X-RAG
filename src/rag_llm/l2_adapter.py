@@ -153,10 +153,9 @@ def convert_l2_to_xai_report(l2_output: Dict, candidate_pool_size: int = 10,
     directions = {m["name"]: m.get("direction", "unknown") for m in all_metrics }
 
     metric_chain = [m["name"] for m in shap_ranked[:query_chain_size]]
-    service_chain = ([item["service"] for item in service_list[:query_chain_size]] or _dedup_services(metric_chain))
 
     candidate_pairs = [ (float(m.get("shap", 0)), m["name"]) for m in shap_ranked]
-    l2_candidates = _ranked_candidates(candidate_pairs, len(candidate_pairs), directions, metric_details)
+    l2_candidates = _ranked_candidates(candidate_pairs, candidate_pool_size, directions, metric_details)
 
     return {
         "timestamp": meta.get("case_id", "unknown"),  # diagnose_batch 当前用它显示进度
